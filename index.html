@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0d12">
+<title>FH6 Horizon Promo Tracker</title>
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#141823; --panel2:#1c2230; --line:#2a3242;
+    --txt:#e8ecf4; --muted:#8b95a8; --accent:#7c5cff; --good:#36d399;
+    --chip:#222a3a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.35;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(11,13,18,.92); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:calc(10px + env(safe-area-inset-top)) 12px 8px;
+  }
+  .title{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .title h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.2px;}
+  .menu-btn{
+    background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:7px 11px;font-size:14px;font-weight:600;cursor:pointer;
+  }
+  .progwrap{margin-top:9px;}
+  .progmeta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:5px;}
+  .progmeta b{color:var(--txt);}
+  .bar{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--good));border-radius:99px;transition:width .25s ease;}
+  .search{margin-top:9px;position:relative;}
+  .search input{
+    width:100%;background:var(--panel);border:1px solid var(--line);color:var(--txt);
+    border-radius:12px;padding:11px 38px 11px 14px;font-size:16px;outline:none;
+  }
+  .search input::placeholder{color:var(--muted);}
+  .search .clr{
+    position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    background:var(--chip);border:none;color:var(--muted);width:26px;height:26px;border-radius:50%;
+    font-size:15px;cursor:pointer;display:none;
+  }
+  .chips{display:flex;gap:7px;overflow-x:auto;padding:10px 2px 2px;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto;background:var(--chip);border:1px solid var(--line);color:var(--muted);
+    border-radius:99px;padding:6px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;
+  }
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .chip .n{opacity:.75;font-weight:500;margin-left:4px;font-size:12px;}
+
+  main{padding:6px 10px 80px;}
+  .group{margin-top:14px;}
+  .ghead{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:6px 6px 8px;position:sticky;top:0;
+  }
+  .ghead h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:0;font-weight:700;}
+  .ghead .gcount{font-size:12px;color:var(--muted);}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .row{
+    display:flex;align-items:center;gap:12px;padding:12px 13px;cursor:pointer;
+    border-top:1px solid var(--line);user-select:none;
+  }
+  .row:first-child{border-top:none;}
+  .row:active{background:var(--panel2);}
+  .box{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid var(--line);
+    background:transparent;display:flex;align-items:center;justify-content:center;transition:.12s;
+  }
+  .box svg{width:15px;height:15px;opacity:0;transform:scale(.5);transition:.12s;}
+  .info{flex:1 1 auto;min-width:0;}
+  .nm{font-size:15px;font-weight:600;line-height:1.25;}
+  .badge{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;letter-spacing:.3px;white-space:nowrap;}
+  .badge.barn{background:#3a2a1a;color:#ffb86b;border:1px solid #5a3d22;}
+  .badge.fe{background:#2a1f3a;color:#c9a6ff;border:1px solid #3f2d5a;}
+  .own{
+    flex:0 0 auto;border:1.5px solid var(--line);background:transparent;color:var(--muted);
+    border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;
+    display:flex;align-items:center;gap:4px;transition:.12s;
+  }
+  .own.on{background:#13314a;border-color:#2f7fe0;color:#9fd0ff;}
+  .statline{display:flex;gap:14px;font-size:13px;color:var(--muted);margin-bottom:5px;}
+  .statline b{color:var(--txt);}
+  .statline .own-stat b{color:#9fd0ff;}
+  .fchips{display:flex;gap:7px;overflow-x:auto;padding:8px 2px 0;scrollbar-width:none;align-items:center;}
+  .fchips::-webkit-scrollbar{display:none;}
+  .flabel{flex:0 0 auto;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;}
+  .fsep{flex:0 0 auto;width:1px;height:20px;background:var(--line);margin:0 3px;}
+  .fchip{
+    flex:0 0 auto;background:var(--chip);border:1px solid var(--line);color:var(--muted);
+    border-radius:99px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;
+  }
+  .fchip.active{background:var(--txt);border-color:var(--txt);color:var(--bg);}
+  .sub{font-size:12.5px;color:var(--muted);margin-top:1px;}
+  .row.done .nm{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line);}
+  .row.done .box{background:var(--good);border-color:var(--good);}
+  .row.done .box svg{opacity:1;transform:scale(1);}
+  .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:15px;}
+
+  /* sheet */
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:none;}
+  .scrim.open{display:block;}
+  .sheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateY(100%);transition:transform .25s ease;
+    background:var(--panel);border-top-left-radius:20px;border-top-right-radius:20px;
+    border-top:1px solid var(--line);padding:8px 16px calc(20px + env(safe-area-inset-bottom));
+  }
+  .sheet.open{transform:translateY(0);}
+  .grab{width:42px;height:5px;border-radius:99px;background:var(--line);margin:8px auto 14px;}
+  .sheet h3{margin:0 0 4px;font-size:16px;}
+  .sheet p{margin:0 0 16px;color:var(--muted);font-size:13.5px;}
+  .act{
+    width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    border-radius:12px;padding:14px;font-size:15px;font-weight:600;margin-bottom:10px;cursor:pointer;
+    display:flex;align-items:center;gap:10px;
+  }
+  .act small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px;}
+  .act.danger{color:#ff7b7b;}
+  .ico{font-size:18px;width:22px;text-align:center;}
+  textarea{
+    width:100%;height:120px;background:var(--bg);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:10px;font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-bottom:10px;
+  }
+  .row-btns{display:flex;gap:10px;}
+  .row-btns .act{margin-bottom:0;justify-content:center;}
+</style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <h1>🏁 Horizon Promo Tracker</h1>
+    <button class="menu-btn" id="menuBtn">Menu</button>
+  </div>
+  <div class="progwrap">
+    <div class="statline">
+      <span class="photo-stat">📷 <b id="photoN">0</b> / <span id="photoT">0</span> photographed</span>
+      <span class="own-stat">🔑 <b id="ownN">0</b> / <span id="ownT">0</span> owned</span>
+    </div>
+    <div class="bar"><i id="progBar"></i></div>
+  </div>
+  <div class="search">
+    <input id="search" type="search" inputmode="search" autocomplete="off" placeholder="Search car or maker…">
+    <button class="clr" id="clrBtn">✕</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="fchips" id="fchips"></div>
+</header>
+
+<main id="list"></main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <div id="sheetMain">
+    <h3>Menu</h3>
+    <p>Your progress is saved automatically in this browser. Use the filter chips up top to show only owned / not-owned / photographed / not-photographed cars.</p>
+    <button class="act" id="hideFE"><span class="ico">✨</span><span>Hide special editions<small id="feState">Currently showing Forza Editions etc.</small></span></button>
+    <button class="act" id="syncOwned"><span class="ico">🔑</span><span>Sync owned from my garage<small id="syncState">Apply the latest owned list</small></span></button>
+    <button class="act" id="doExport"><span class="ico">⬆️</span><span>Export backup<small>Copy owned + photographed as text</small></span></button>
+    <button class="act" id="doImport"><span class="ico">⬇️</span><span>Import backup<small>Restore from saved text</small></span></button>
+    <button class="act danger" id="doReset"><span class="ico">♻️</span><span>Reset photographed<small>Uncheck every photographed car (keeps owned)</small></span></button>
+  </div>
+  <div id="sheetIO" style="display:none;">
+    <h3 id="ioTitle">Backup</h3>
+    <p id="ioDesc"></p>
+    <textarea id="ioBox" spellcheck="false"></textarea>
+    <div class="row-btns">
+      <button class="act" id="ioBack">Back</button>
+      <button class="act" id="ioGo" style="background:var(--accent);border-color:var(--accent);color:#fff;">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- Car data: Forza Horizon 6 Horizon Promo (AI-spawnable roster) ----
+// Each: [year, manufacturer, model, class]
+const CARS = [
+[1968,"Abarth","595 esseesse","D"],[1980,"Abarth","Fiat 131","D"],[2016,"Abarth","695 Biposto","B"],
+[2001,"Acura","Integra Type R","C"],[2002,"Acura","RSX Type S","C"],[2022,"Acura","NSX Type S","S1"],[2023,"Acura","Integra A-Spec","C"],
+[1965,"Alfa Romeo","Giulia Sprint GTA Stradale","D"],[1965,"Alfa Romeo","Giulia TZ2","B"],[1968,"Alfa Romeo","33 Stradale","B"],[1990,"Alfa Romeo","SE 048SP","R"],[1992,"Alfa Romeo","155 Q4","C"],[2007,"Alfa Romeo","8C Competizione","A"],[2014,"Alfa Romeo","4C","A"],[2017,"Alfa Romeo","Giulia Quadrifoglio","A"],[2021,"Alfa Romeo","Giulia GTAm","S1"],
+[2015,"Alumicraft","Class 10 Race Car","B"],[2021,"Alumicraft","#122 Class 1 Buggy","B"],[2022,"Alumicraft","#6165 Trick Truck","C"],
+[2554,"AMG Transport Dynamics","M12S Warthog CST","A"],
+[2019,"Apollo","Intensa Emozione","R"],
+[2013,"Ariel","Atom 500 V8","S2"],[2016,"Ariel","Nomad","A"],
+[1964,"Aston Martin","DB5","C"],[2016,"Aston Martin","Vulcan","S2"],[2017,"Aston Martin","DB11","A"],[2017,"Aston Martin","Vulcan AMR Pro","S2"],[2019,"Aston Martin","DBS Superleggera","S1"],[2019,"Aston Martin","Valhalla Concept Car","R"],[2019,"Aston Martin","Vantage","A"],[2021,"Aston Martin","DBX","A"],[2022,"Aston Martin","Valkyrie AMR Pro","R"],[2023,"Aston Martin","Valkyrie","R"],
+[1984,"Audi","Sport quattro","B"],[1986,"Audi","#2 Sport quattro S1","S1"],[2001,"Audi","RS 4 Avant","B"],[2003,"Audi","RS 6","B"],[2006,"Audi","RS 4","B"],[2009,"Audi","R8 LMS","S2"],[2009,"Audi","RS 6","B"],[2010,"Audi","TT RS Coupé","B"],[2011,"Audi","RS 3 Sportback","B"],[2011,"Audi","RS 5 Coupé","A"],[2013,"Audi","R8 Coupé V10 plus 5.2 FSI quattro","A"],[2013,"Audi","RS 4 Avant","A"],[2013,"Audi","RS 7 Sportback","A"],[2015,"Audi","RS 6 Avant","A"],[2015,"Audi","S1","B"],[2016,"Audi","R8 V10 plus","S1"],[2018,"Audi","RS 4 Avant","A"],[2020,"Audi","R8 V10 performance","S1"],[2020,"Audi","RS 3 Sedan","A"],[2021,"Audi","RS 6 Avant","A"],[2021,"Audi","RS 7 Sportback","A"],[2021,"Audi","RS e-tron GT","A"],[2023,"Audi","R8 Coupé V10 GT RWD","S1"],
+[1993,"Autozam","AZ-1","D"],
+[2014,"BAC","Mono","S1"],
+[2016,"Bentley","Bentayga","A"],[2021,"Bentley","Continental GT Convertible","A"],
+[1957,"BMW","Isetta 300 Export","D"],[1973,"BMW","2002 Turbo","C"],[1981,"BMW","M1","B"],[1988,"BMW","M3","C"],[1988,"BMW","M5","C"],[1995,"BMW","850CSi","C"],[1995,"BMW","M5","B"],[1997,"BMW","M3","B"],[2003,"BMW","M5","B"],[2005,"BMW","M3","B"],[2008,"BMW","M3","A"],[2008,"BMW","Z4 M Coupé","B"],[2009,"BMW","M5","B"],[2010,"BMW","M3 GTS","A"],[2011,"BMW","X5 M","B"],[2012,"BMW","M5","A"],[2014,"BMW","M4 Coupé","A"],[2015,"BMW","i8","A"],[2016,"BMW","M4 GTS","S1"],[2019,"BMW","Z4 Roadster","A"],[2020,"BMW","M2 Competition Coupé","A"],[2020,"BMW","M8 Competition Coupé","A"],[2021,"BMW","M4 Competition Coupé","A"],[2022,"BMW","iX xDrive50","B"],[2022,"BMW","M5 CS","S1"],[2023,"BMW","M2","A"],[2024,"BMW","X6 M Competition","A"],
+[1987,"Buick","Regal GNX","C"],
+[2013,"Cadillac","XTS Limousine","D"],[2016,"Cadillac","ATS-V","A"],[2016,"Cadillac","CTS-V Sedan","A"],[2022,"Cadillac","CT4-V Blackwing","A"],[2022,"Cadillac","CT5-V Blackwing","S1"],
+[2018,"Can-Am","Maverick X RS Turbo R","B"],
+[2019,"Casey Currie Motorsports","#4402 Ultra 4 'Trophy Jeep'","A"],
+[1953,"Chevrolet","Corvette","D"],[1955,"Chevrolet","150 Utility Sedan","D"],[1957,"Chevrolet","Bel Air","D"],[1960,"Chevrolet","Corvette","C"],[1964,"Chevrolet","Impala Super Sport 409","C"],[1967,"Chevrolet","Corvette Stingray 427","B"],[1969,"Chevrolet","Camaro Super Sport Coupe","C"],[1969,"Chevrolet","Nova Super Sport 396","C"],[1970,"Chevrolet","Camaro Z28","C"],[1970,"Chevrolet","Chevelle Super Sport 454","C"],[1970,"Chevrolet","Corvette ZR-1","C"],[1970,"Chevrolet","El Camino Super Sport 454","C"],[1972,"Chevrolet","K-10 Custom","D"],[1979,"Chevrolet","Camaro Z28","D"],[1988,"Chevrolet","Monte Carlo Super Sport","D"],[1995,"Chevrolet","Corvette ZR-1","B"],[1996,"Chevrolet","Impala Super Sport","C"],[2002,"Chevrolet","Corvette Z06","A"],[2009,"Chevrolet","Corvette ZR1","S1"],[2015,"Chevrolet","Camaro Z/28","A"],[2015,"Chevrolet","Corvette Z06","S1"],[2017,"Chevrolet","Camaro ZL1","S1"],[2018,"Chevrolet","Camaro ZL1 1LE","S1"],[2019,"Chevrolet","Corvette ZR1","S1"],[2020,"Chevrolet","Corvette Stingray Coupe","A"],[2020,"Chevrolet","Silverado LT Trail Boss","C"],[2023,"Chevrolet","Corvette Z06","S1"],[2024,"Chevrolet","Corvette E-Ray","S1"],
+[1969,"Datsun","2000 Roadster","D"],[1970,"Datsun","510","D"],[1972,"Datsun","#269 Attacking the Clock Racing 240Z","R"],
+[2013,"DeBerti","Jeep Wrangler Unlimited","A"],[2018,"DeBerti","Chevrolet Silverado 1500 Drift Truck","S1"],[2019,"DeBerti","Ford Super Duty F-250 Lariat 'Transformer'","B"],[2019,"DeBerti","Toyota Tacoma TRD 'The Performance Truck'","S1"],
+[1982,"DeLorean","DMC-12","D"],
+[1968,"Dodge","Dart HEMI Super Stock","B"],[1969,"Dodge","Charger Daytona HEMI","C"],[1969,"Dodge","Charger R/T","C"],[1970,"Dodge","Challenger R/T","C"],[1970,"Dodge","Coronet Super Bee","C"],[1999,"Dodge","Viper GTS ACR","B"],[1999,"Dodge","Viper GTS ACR Forza Edition","A","fe"],[2006,"Dodge","Ram SRT-10","B"],[2008,"Dodge","Viper SRT-10 ACR","S1"],[2015,"Dodge","Challenger SRT Hellcat","A"],[2015,"Dodge","Charger SRT Hellcat","A"],[2016,"Dodge","Viper ACR","S1"],[2018,"Dodge","Challenger SRT Demon","A"],[2021,"Dodge","Durango SRT Hellcat","A"],[2022,"Dodge","Challenger SRT Super Stock","A"],
+[1962,"Ferrari","250 GT Berlinetta Lusso","C"],[1962,"Ferrari","250 GTO","C"],[1967,"Ferrari","#24 Spa 330 P4","A"],[1967,"Ferrari","275 GTB4 Spider","C"],[1969,"Ferrari","Dino 246 GT","C"],[1970,"Ferrari","512 S","S1"],[1984,"Ferrari","288 GTO","A"],[1987,"Ferrari","F40","A"],[1989,"Ferrari","F40 Competizione","R"],[1992,"Ferrari","512 TR","A"],[1994,"Ferrari","F355 Berlinetta","B"],[1995,"Ferrari","F50","A"],[1996,"Ferrari","F50 GT","R"],[2002,"Ferrari","Enzo Ferrari","S1"],[2005,"Ferrari","FXX","S2"],[2007,"Ferrari","430 Scuderia","S1"],[2009,"Ferrari","458 Italia","S1"],[2010,"Ferrari","599XX","S2"],[2012,"Ferrari","599XX Evolution","S2"],[2013,"Ferrari","458 Speciale","S1"],[2013,"Ferrari","LaFerrari","S2"],[2014,"Ferrari","FXX K","R"],[2015,"Ferrari","488 GTB","S1"],[2015,"Ferrari","F12tdf","S1"],[2017,"Ferrari","812 Superfast","S1"],[2017,"Ferrari","J50","S1"],[2018,"Ferrari","FXX-K Evo","R"],[2018,"Ferrari","Portofino","S1"],[2019,"Ferrari","488 Pista","S2"],[2019,"Ferrari","F8 Tributo","S2"],[2019,"Ferrari","Monza SP2","S1"],[2020,"Ferrari","Roma","S1"],[2020,"Ferrari","SF90 Stradale","S2"],[2022,"Ferrari","296 GTB","S2"],[2025,"Ferrari","F80","R"],
+[1932,"Ford","De Luxe Five-Window Coupe","D"],[1965,"Ford","Mustang GT Coupe","D"],[1966,"Ford","#2 GT40 Mk II","A"],[1968,"Ford","Mustang GT 2+2 Fastback","D"],[1969,"Ford","Mustang Boss 302","C"],[1973,"Ford","Capri RS3100","D"],[1973,"Ford","XB Falcon GT","C"],[1977,"Ford","#5 Escort RS1800 MkII","B"],[1985,"Ford","RS200 Evolution","S1"],[1986,"Ford","F-150 XLT Lariat","D"],[1987,"Ford","Sierra Cosworth RS500","C","barn"],[1992,"Ford","Escort RS Cosworth","C"],[1993,"Ford","Mustang SVT Cobra R","C"],[1994,"Ford","Supervan 3","S1"],[1999,"Ford","Racing Puma","C"],[2000,"Ford","Mustang SVT Cobra R","B"],[2001,"Ford","#4 Focus RS","A"],[2003,"Ford","F-150 SVT Lightning","C"],[2003,"Ford","Focus RS","C"],[2005,"Ford","GT","A"],[2009,"Ford","Focus RS","B"],[2010,"Ford","Crown Victoria Police Interceptor","D"],[2011,"Ford","Transit SuperSportVan","D"],[2013,"Ford","Mustang Shelby GT500","A"],[2014,"Ford","#11 Rockstar F-150 Trophy Truck","A"],[2014,"Ford","FPV Limited Edition Pursuit Ute","B"],[2014,"Ford","Ranger T6 Rally Raid","B"],[2016,"Ford","Mustang Shelby GT350R","S1"],[2017,"Ford","#14 Rahal Letterman Lanigan Racing Fiesta","S1"],[2017,"Ford","#25 'Brocky' Ultra4 Bronco RTR","A"],[2017,"Ford","Focus RS","B"],[2017,"Ford","GT","S1"],[2017,"Ford","M-Sport Fiesta RS","S1"],[2018,"Ford","Mustang RTR Spec 5","A"],[2020,"Ford","#2069 Performance Bronco R","C"],[2020,"Ford","Mustang Shelby GT500","S1"],[2020,"Ford","Super Duty F-450 DRW Platinum","D"],[2022,"Ford","Bronco Raptor","C"],[2022,"Ford","F-150 Lightning","C"],[2022,"Ford","Focus ST","B"],[2022,"Ford","Supervan 4","R"],[2023,"Ford","F-150 Raptor R","B"],[2023,"Ford","Fiesta ST","C"],[2024,"Ford","Mustang Dark Horse","A"],[2024,"Ford","Mustang GT","A"],
+[1989,"Formula Drift","#98 BMW 325i","S1"],[1995,"Formula Drift","#34 Toyota Supra MkIV","S1"],[1997,"Formula Drift","#777 Nissan 240SX","S1"],[2006,"Formula Drift","#43 Dodge Viper SRT-10 ACR","S1"],[2007,"Formula Drift","#117 599 GTB Fiorano","S1"],[2009,"Formula Drift","#99 Mazda RX-8","S1"],[2013,"Formula Drift","#777 Chevrolet Corvette","S1"],[2015,"Formula Drift","#13 Ford Mustang","S1"],[2016,"Formula Drift","#530 HSV Maloo GEN-F","S1"],[2019,"Formula Drift","#411 Toyota Corolla Hatchback","S1"],[2020,"Formula Drift","#151 Toyota GR Supra","S1"],[2020,"Formula Drift","#91 BMW M2","S1"],[2023,"Formula Drift","#64 Forsberg Racing Nissan Z","S1"],
+[2018,"Funco Motorsports","F9","S1"],
+[1970,"GMC","Jimmy","C"],[1991,"GMC","Syclone","C"],[1992,"GMC","Typhoon","C"],[2022,"GMC","HUMMER EV Pickup","A"],
+[2020,"Gordon Murray Automotive","T.50","S2"],
+[2025,"GR","GT Prototype","S1"],
+[2012,"Hennessey","Venom GT","S2"],[2019,"Hennessey","Ford F-150 VelociRaptor 6X6","B"],[2021,"Hennessey","Venom F5","S2"],
+[1977,"Holden","Torana A9X","C"],
+[1970,"Honda","S800","D"],[1974,"Honda","Civic RS","D"],[1984,"Honda","City E II","D"],[1984,"Honda","Civic CRX Mugen","D"],[1986,"Honda","Civic Si","D"],[1990,"Honda","#19 101 Motorsport CRX WTAC","S2"],[1991,"Honda","Beat","D"],[1991,"Honda","CR-X SiR","C"],[1992,"Honda","#21 Hardrace/JDMYard Civic WTAC","R"],[1992,"Honda","NSX-R","B"],[1994,"Honda","Acty","D"],[1994,"Honda","Prelude Si","C"],[1997,"Honda","Civic Type R","C"],[2001,"Honda","#33 Integra WTAC","S2"],[2003,"Honda","S2000","B"],[2004,"Honda","#52 Evasive Motorsports S2000 WTAC","S2"],[2004,"Honda","Civic Type R","C"],[2005,"Honda","NSX-R","B"],[2005,"Honda","NSX-R GT","A","barn"],[2007,"Honda","Civic Type R","C"],[2008,"Honda","Civic Type R (FD2)","B"],[2015,"Honda","Civic Type R","B"],[2015,"Honda","Ridgeline Baja Trophy Truck","B"],[2018,"Honda","Civic Type R","A"],[2022,"Honda","e","D"],[2023,"Honda","Civic Type R","A"],
+[2014,"HSV","GEN-F GTS","A"],[2014,"HSV","Limited Edition GEN-F GTS Maloo","A"],
+[2019,"Hyundai","Veloster N","B"],[2020,"Hyundai","i30 N","B"],[2021,"Hyundai","i20 N","B"],[2022,"Hyundai","N Vision 74","A"],[2023,"Hyundai","IONIQ 5 N","A"],
+[1956,"Jaguar","D-Type","B"],[1961,"Jaguar","E-type","C"],[1964,"Jaguar","Lightweight E-Type","B"],[1991,"Jaguar","Sport XJR-15","S1"],[1993,"Jaguar","XJ220","A"],[1993,"Jaguar","XJ220S TWR","S1"],[2010,"Jaguar","C-X75","S2"],
+[2012,"Jeep","Wrangler Rubicon","D"],[2016,"Jeep","Trailcat","A"],[2018,"Jeep","Grand Cherokee Trackhawk","A"],[2020,"Jeep","JT","D"],
+[2019,"Jimco","#240 Fastball Racing Class 6100 Spec Trophy Truck","B"],[2020,"Jimco","#179 Hammerhead Class 1","A"],
+[2008,"Koenigsegg","CCGT","S2"],[2011,"Koenigsegg","Agera","S2"],[2015,"Koenigsegg","One:1","S2"],[2016,"Koenigsegg","Regera","S2"],[2017,"Koenigsegg","Agera RS","S2"],[2020,"Koenigsegg","Jesko","S2"],[2024,"Koenigsegg","Gemera","S2"],
+[2018,"KTM","X-Bow GT4","S1"],
+[1967,"Lamborghini","Miura P400","B"],[1988,"Lamborghini","Countach LP5000 QV","A"],[1997,"Lamborghini","Diablo SV","A","barn"],[1999,"Lamborghini","Diablo GTR","S2"],[2010,"Lamborghini","Murciélago LP 670-4 SV","S1"],[2011,"Lamborghini","Sesto Elemento","S2"],[2012,"Lamborghini","Aventador LP700-4","S1"],[2012,"Lamborghini","Gallardo LP570-4 Spyder Performante","A"],[2013,"Lamborghini","Veneno","S2"],[2014,"Lamborghini","Huracán LP 610-4","S1"],[2016,"Lamborghini","Centenario LP 770-4","S1"],[2018,"Lamborghini","Aventador SVJ","S1"],[2019,"Lamborghini","Urus","A"],[2020,"Lamborghini","Essenza SCV12","R"],[2020,"Lamborghini","Huracán EVO","S1"],[2020,"Lamborghini","Huracán STO","S1"],[2020,"Lamborghini","Sián Roadster","S1"],[2021,"Lamborghini","Countach LPI 800-4","S1"],[2022,"Lamborghini","Aventador LP 780-4 Ultimae","S1"],[2022,"Lamborghini","Huracán Sterrato","S1"],[2022,"Lamborghini","Huracán Tecnica","S1"],[2024,"Lamborghini","Revuelto","S2"],
+[1974,"Lancia","Stratos HF Stradale","C"],[1986,"Lancia","Delta S4","B"],[1992,"Lancia","Delta HF Integrale EVO","C"],
+[2015,"Land Rover","Range Rover Sport SVR","A"],[2020,"Land Rover","Defender 110 X","C"],
+[2010,"Lexus","LFA","A"],[2015,"Lexus","RC F","A"],[2021,"Lexus","LC 500","B"],
+[1962,"Lincoln","Continental","D","barn"],
+[1997,"Lotus","Elise GT1","S1"],[1999,"Lotus","Elise Series 1 Sport 190","B"],[2018,"Lotus","Exige Cup 430","S1"],[2018,"Lotus","Scura Motorsports Exige WTAC","R"],[2020,"Lotus","Evija","R"],[2023,"Lotus","Emira","A"],
+[2024,"Lucid","Air Sapphire","S2"],
+[1997,"Maserati","Ghibli Cup","B"],[2004,"Maserati","MC12","S1"],[2008,"Maserati","MC12 Versione Corsa","R"],[2022,"Maserati","MC20","S1"],
+[1972,"Mazda","Cosmo 110S Series II","D"],[1973,"Mazda","RX-3","D"],[1974,"Mazda","#123 Mad Mike 808 Wagon 'FURSTY'","S1"],[1985,"Mazda","RX-7 GSL-SE","D"],[1990,"Mazda","Savanna RX-7","C"],[1991,"Mazda","#55 787B","R","barn"],[1992,"Mazda","RX-7 Type R","B"],[1994,"Mazda","MX-5 Miata","D"],[2005,"Mazda","Mazdaspeed MX-5","C"],[2008,"Mazda","Furai","R"],[2010,"Mazda","Mazdaspeed 3","B"],[2011,"Mazda","RX-8 R3","B"],[2013,"Mazda","MX-5","C"],[2016,"Mazda","MX-5","C"],[2017,"Mazda","MX-5 Cup","B"],[2022,"Mazda","MX-5 Miata RF","B"],
+[1993,"McLaren","F1","S1"],[1997,"McLaren","F1 GT","S1"],[2011,"McLaren","12C Coupé","S1"],[2013,"McLaren","P1","S2"],[2014,"McLaren","650S Spider","S1"],[2015,"McLaren","570S Coupé","S1"],[2018,"McLaren","600LT Coupé","S1"],[2019,"McLaren","Speedtail","S2"],[2021,"McLaren","620R","S1"],[2021,"McLaren","765LT Coupé","S2"],[2021,"McLaren","Sabre","S1"],[2023,"McLaren","Artura","S1"],
+[2015,"Mercedes-AMG","GT S","A"],[2016,"Mercedes-AMG","C 63 S Coupé","A"],[2017,"Mercedes-AMG","GT R","S1"],[2018,"Mercedes-AMG","E 63 S","A"],[2018,"Mercedes-AMG","GT 4-Door Coupé","A"],[2020,"Mercedes-AMG","GT Black Series","S1"],[2020,"Mercedes-AMG","SLC 43 Final Edition","A"],[2021,"Mercedes-AMG","ONE","S2"],[2021,"Mercedes-AMG","SL 63","A"],
+[1954,"Mercedes-Benz","300 SL Coupé","D"],[1955,"Mercedes-Benz","300 SLR","B"],[1987,"Mercedes-Benz","AMG Hammer Coupe","B"],[1990,"Mercedes-Benz","190 E 2.5-16 Evolution II","C"],[1998,"Mercedes-Benz","AMG CLK GTR","S1"],[2009,"Mercedes-Benz","SL 65 AMG Black Series","A"],[2012,"Mercedes-Benz","C 63 AMG Coupé Black Series","A"],[2013,"Mercedes-Benz","A 45 AMG","B"],[2013,"Mercedes-Benz","G 65 AMG","B"],[2014,"Mercedes-Benz","G 63 AMG 6x6","C"],[2014,"Mercedes-Benz","Unimog U5023","D"],[2018,"Mercedes-Benz","X-Class","D"],
+[1971,"Meyers","Manx","D"],[2023,"Meyers","Manx 2.0","B"],
+[1986,"MG","Metro 6R4","A"],
+[1965,"MINI","Cooper S","D"],[2012,"MINI","John Cooper Works GP","B"],[2013,"MINI","X-Raid All4 Racing Countryman","B"],[2018,"MINI","X-raid John Cooper Works Buggy","B"],[2021,"MINI","John Cooper Works GP","B"],
+[1990,"Mitsubishi","#269 Attacking the Clock Racing Minicab Time Attack","D"],[1992,"Mitsubishi","Galant VR-4","C"],[1995,"Mitsubishi","Eclipse GSX","C"],[1995,"Mitsubishi","Lancer Evolution III GSR","B"],[1995,"Mitsubishi","Montero Exceed 2800 TD","D"],[1997,"Mitsubishi","GTO","C"],[1997,"Mitsubishi","Montero Evolution","D","barn"],[2001,"Mitsubishi","Lancer Evolution VI GSR TM Edition","B"],[2004,"Mitsubishi","Lancer Evolution VIII MR","B"],[2005,"Mitsubishi","#1 Sierra Sierra Enterprises Lancer Evolution Time Attack","R","barn"],[2006,"Mitsubishi","Lancer Evolution IX MR","B"],[2008,"Mitsubishi","Lancer Evolution X GSR","B"],
+[1969,"Nissan","Fairlady Z 432","D"],[1971,"Nissan","Skyline 2000GT-R","D","barn"],[1973,"Nissan","Skyline H/T 2000GT-R","C"],[1983,"Nissan","#11 Tomica Skyline Turbo Super Silhouette","S2","barn"],[1985,"Nissan","Safari Turbo","D"],[1987,"Nissan","Be-1","D"],[1987,"Nissan","Skyline GTS-R","C"],[1989,"Nissan","PAO","D","barn"],[1989,"Nissan","S-Cargo","D"],[1989,"Nissan","Silvia K's","C"],[1990,"Nissan","#12 Skyline GT-R (BNR32 Gr.A) JTC","S2"],[1990,"Nissan","Pulsar GTI-R","C"],[1991,"Nissan","Figaro","D"],[1992,"Nissan","Skyline GT-R","B"],[1993,"Nissan","#32 Skyline WTAC 'Xtreme GTR'","R"],[1993,"Nissan","240SX","D"],[1994,"Nissan","Fairlady Z Version S Twin Turbo","C"],[1994,"Nissan","Silvia K's","C"],[1995,"Nissan","Gloria Gran Turismo","C"],[1995,"Nissan","NISMO GT-R LM","B"],[1997,"Nissan","Skyline GT-R V-Spec","B"],[1997,"Nissan","Stagea RS Four V","C"],[1998,"Nissan","#23 Pennzoil NISMO Skyline GT-R","S2","barn"],[1998,"Nissan","R390 (GT1)","S1","barn"],[1998,"Nissan","Silvia K's Aero","C"],[1998,"Nissan","Skyline GT-R 40th Anniversary","B"],[2000,"Nissan","#36 Dream Project S15 Silvia WTAC","R"],[2000,"Nissan","Skyline GT-R V Spec II","B"],[2002,"Nissan","Silvia Spec-R","B"],[2003,"Nissan","Fairlady Z","B"],[2012,"Nissan","GT-R Black Edition (R35)","S1"],[2017,"Nissan","GT-R (R35)","S1"],[2019,"Nissan","370Z NISMO","A"],[2020,"Nissan","GT-R NISMO (R35)","S1"],[2024,"Nissan","GT-R Nismo","S1"],[2024,"Nissan","Z NISMO","A"],
+[2010,"Noble","M600","S1"],
+[1984,"Opel","Manta 400","B"],
+[2009,"Pagani","Zonda R","R"],[2010,"Pagani","Zonda Cinque Roadster","S2"],[2016,"Pagani","Huayra BC Coupe","S2"],[2021,"Pagani","Huayra R","R"],
+[1962,"Peel","P50","D"],[1962,"Peel","P50 Trolli Edition","D"],
+[2011,"Penhall","The Cholla","B"],
+[1984,"Peugeot","205 Turbo 16","B","barn"],[1991,"Peugeot","205 Rallye","D"],[2007,"Peugeot","207 Super 2000","A"],
+[1958,"Plymouth","Fury","D"],[1968,"Plymouth","Barracuda Formula S","C"],[1971,"Plymouth","Cuda 426 HEMI","C"],
+[2021,"Polaris","RZR Pro XP Factory Racing Limited Edition","C"],[2021,"Polaris","RZR Pro XP Ultimate","C"],
+[1977,"Pontiac","Firebird Trans Am","D"],[1987,"Pontiac","Firebird Trans Am GTA","D"],
+[1970,"Porsche","#3 917 LH","S1"],[1973,"Porsche","911 Carrera RS","C"],[1982,"Porsche","911 Turbo 3.3","B","barn"],[1985,"Porsche","#185 959 Prodrive Rally Raid","A"],[1987,"Porsche","959","A"],[1989,"Porsche","944 Turbo","B"],[1993,"Porsche","911 Turbo S Leichtbau","A"],[1993,"Porsche","928 GTS","B"],[1993,"Porsche","968 Turbo S","B"],[1995,"Porsche","911 GT2","A"],[1997,"Porsche","911 GT1 Strassenversion","S1"],[2003,"Porsche","Carrera GT","S1"],[2004,"Porsche","911 GT3","A"],[2005,"Porsche","Cayman GT3 WTAC","S2"],[2012,"Porsche","911 GT3 RS 4.0","S1"],[2014,"Porsche","918 Spyder","S2"],[2018,"Porsche","718 Cayman GTS","A"],[2018,"Porsche","911 GT2 RS","S2"],[2018,"Porsche","Cayenne Turbo","A"],[2018,"Porsche","Macan LPR Rally Raid","B"],[2019,"Porsche","#70 Porsche Motorsport 935","S2"],[2019,"Porsche","911 Carrera S","S1"],[2019,"Porsche","911 GT3 RS","S1"],[2020,"Porsche","Taycan Turbo S","S1"],[2021,"Porsche","911 GT3","S1"],[2021,"Porsche","Mission R","S2"],[2022,"Porsche","718 Cayman GT4 RS","S1"],[2023,"Porsche","911 GT3 RS","S1"],[2023,"Porsche","911 Rallye","A"],[2023,"Porsche","911 Turbo S","S1"],
+[2015,"Radical","RXC Turbo","S2"],
+[2024,"Ram","1500 TRX","B"],
+[1972,"Reliant","Supervan III","D"],
+[1967,"Renault","8 Gordini","D"],[1980,"Renault","5 Turbo","C"],[1993,"Renault","Clio Williams","D"],[2008,"Renault","Mégane R26.R","B"],[2010,"Renault","Megane RS 250","B"],[2018,"Renault","Megane R.S.","B"],
+[2021,"Rimac","Nevera","R"],
+[2022,"Rivian","R1T","A"],
+[2016,"RJ Anderson","#37 Polaris RZR Pro 2 Truck","A"],[2021,"RJ Anderson","#37 Polaris RZR Pro 4 Truck","A"],
+[2017,"Saleen","S7 LM","S2"],
+[1993,"Schuppan","962CR","S1"],
+[1965,"Shelby","Cobra 427 S/C","B"],[1965,"Shelby","Cobra Daytona Coupe","B"],
+[2020,"SIERRA Cars","#23 Yokohama ALPHA","R"],[2021,"SIERRA Cars","700R","D"],[2021,"SIERRA Cars","RX3","A"],
+[2013,"SRT","Viper GTS","S1"],
+[1980,"Subaru","BRAT GL","D"],[1990,"Subaru","LEGACY RS","C"],[1994,"Subaru","Vivio RX-R","D"],[1996,"Subaru","SVX","C"],[1998,"Subaru","Impreza 22B-STi Version","B"],[2004,"Subaru","IMPREZA WRX STI","B"],[2005,"Subaru","IMPREZA WRX STI","B"],[2005,"Subaru","LEGACY B4 2.0 GT","B"],[2008,"Subaru","IMPREZA WRX STI","B"],[2011,"Subaru","WRX STI","B"],[2013,"Subaru","BRZ","C"],[2015,"Subaru","WRX STI","B"],[2018,"Subaru","WRX STI ARX Supercar","S1"],[2019,"Subaru","STI S209","B"],[2022,"Subaru","BRZ","B"],[2022,"Subaru","WRX","B"],
+[1998,"TVR","Cerbera Speed 12","S1"],[2005,"TVR","Sagaris","A"],[2018,"TVR","Griffith","S1"],
+[1965,"Toyota","Sports 800","D"],[1969,"Toyota","2000GT","D","barn"],[1974,"Toyota","Corolla SR5","D"],[1979,"Toyota","FJ40","D"],[1985,"Toyota","Sprinter Trueno GT Apex","D"],[1989,"Toyota","MR2 SC","D"],[1991,"Toyota","Chaser GT Twin Turbo","C"],[1991,"Toyota","Sera","D"],[1992,"Toyota","Celica GT-Four RC ST185","C"],[1992,"Toyota","Supra 2.0 GT","C"],[1993,"Toyota","#1 T100 Baja Truck","B"],[1994,"Toyota","Celica GT-Four ST205","C"],[1995,"Toyota","J&J Motorsport Supra WTAC","S2"],[1995,"Toyota","MR2 GT","B"],[1996,"Toyota","Starlet Glanza V","C"],[1997,"Toyota","Chaser 2.5 Tourer V","B"],[1997,"Toyota","Soarer 2.5 GT-T","C"],[1998,"Toyota","Supra RZ","B"],[1999,"Toyota","Altezza RS200 Z EDITION","C"],[2003,"Toyota","Celica Sport Specialty II","C"],[2005,"Toyota","Crown Super Deluxe Taxi","D"],[2013,"Toyota","86","C"],[2016,"Toyota","Land Cruiser Arctic Trucks AT37","D"],[2017,"Toyota","JPN Taxi","D"],[2019,"Toyota","4Runner TRD Pro","C"],[2019,"Toyota","Tacoma TRD Pro","C"],[2020,"Toyota","GR Supra","A"],[2021,"Toyota","GR Yaris","B"],[2022,"Toyota","GR86","B"],[2023,"Toyota","Camry TRD","B"],[2023,"Toyota","GR Corolla","B"],[2025,"Toyota","Land Cruiser","C"],
+[1963,"Volkswagen","Beetle","D"],[1963,"Volkswagen","Type 2 De Luxe","D"],[1969,"Volkswagen","Class 5/1600 Baja Bug","D"],[1982,"Volkswagen","Pickup LX","D"],[1983,"Volkswagen","Golf GTI","D"],[1989,"Volkswagen","Rallye Golf","C"],[1992,"Volkswagen","Golf Gti 16v Mk2","D"],[1995,"Volkswagen","Corrado VR6","C"],[2010,"Volkswagen","Golf R","B"],[2011,"Volkswagen","Scirocco R","B"],[2014,"Volkswagen","Golf R","B"],[2021,"Volkswagen","Golf R","B"],[2022,"Volkswagen","Golf R","B"],
+[1983,"Volvo","242 Turbo Evolution","C"],
+[2013,"Wuling","Sunshine S","D"],[2022,"Wuling","Hongguang Mini EV","D"],
+[2019,"Zenvo","TSR-S","R"],
+// ---- Special editions: Forza Edition / Welcome Pack / Preorder (tagged, hideable) ----
+[1965,"Toyota","Sports 800 Fanta Edition","D","fe"],[1968,"Ford","Mustang GT 2+2 Fastback Forza Edition","A","fe"],[1970,"Porsche","#3 917 LH Forza Edition","R","fe"],[1973,"Mazda","RX-3 Forza Edition","B","fe"],[1985,"Toyota","Sprinter Trueno GT Apex Forza Edition","B","fe"],[1986,"Ford","F-150 XLT Lariat Forza Edition","S2","fe"],[1989,"Nissan","S-Cargo Forza Edition","S1","fe"],[1990,"Mercedes-Benz","190 E 2.5-16 Evolution II Forza Edition","A","fe"],[1994,"Mazda","MX-5 Miata Forza Edition","S2","fe"],[1994,"Subaru","Vivio RX-R Forza Edition","S2","fe"],[2010,"Lexus","LFA Forza Edition","S2","fe"],[2012,"Nissan","GT-R Black Edition (R35) Forza Edition","S2","fe"],[2013,"Wuling","Sunshine S Forza Edition","S1","fe"],[2019,"Toyota","Tacoma TRD Pro Forza Edition","R","fe"],[2020,"Ford","Super Duty F-450 DRW Platinum Forza Edition","A","fe"],[2020,"Lotus","Evija Forza Edition","S2","fe"],[2022,"Subaru","BRZ Forza Edition","A","fe"],[2023,"BMW","M2 Forza Edition","A","fe"],
+[2004,"Mitsubishi","Lancer Evolution VIII MR Welcome Pack","A","fe"],[2017,"Ferrari","J50 Preorder Car","S1","fe"],[2018,"Ferrari","FXX-K Evo Welcome Pack","R","fe"],[2020,"Mercedes-AMG","GT Black Series Welcome Pack","S2","fe"],[2021,"BMW","M4 Competition Coupé Welcome Pack","S1","fe"],[2023,"Ford","F-150 Raptor R Welcome Pack","B","fe"]
+];
+
+const CLASS_ORDER = ["D","C","B","A","S1","S2","R"];
+const STORE_KEY = "fh6_promo_v1";   // photographed ids
+const OWN_KEY   = "fh6_owned_v1";   // owned ids
+
+// ---- Owned cars detected from garage screenshots (auto-populated) ----
+const PRESET_OWNED = [
+];
+
+// Attach a stable id + tag to each car
+CARS.forEach(c => {
+  c.id = (c[1]+"|"+c[0]+"|"+c[2]).toLowerCase();
+  c.tag = (typeof c[4] === "string") ? c[4] : ""; // "barn" | "fe" | ""
+});
+
+let done = loadDone();
+let owned = loadOwned();
+let activeClass = "ALL";
+let query = "";
+let hideFEFlag = false;
+let photoFilter = "all";   // all | yes | no
+let ownFilter = "all";     // all | yes | no
+
+function loadDone(){
+  try{ return new Set(JSON.parse(localStorage.getItem(STORE_KEY)||"[]")); }
+  catch(e){ return new Set(); }
+}
+function saveDone(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify([...done])); }catch(e){} }
+function loadOwned(){
+  try{
+    const s=localStorage.getItem(OWN_KEY);
+    if(s===null) return new Set(PRESET_OWNED); // seed from screenshots on first run
+    return new Set(JSON.parse(s));
+  }catch(e){ return new Set(); }
+}
+function saveOwned(){ try{ localStorage.setItem(OWN_KEY, JSON.stringify([...owned])); }catch(e){} }
+
+const $ = s => document.querySelector(s);
+const listEl = $("#list");
+
+function classCounts(){
+  const tot={}, dn={};
+  CLASS_ORDER.forEach(c=>{tot[c]=0;dn[c]=0;});
+  CARS.forEach(c=>{ if(hideFEFlag && c.tag==="fe") return; tot[c[3]]++; if(done.has(c.id)) dn[c[3]]++; });
+  return {tot,dn};
+}
+
+function baseCars(){ return hideFEFlag ? CARS.filter(c=>c.tag!=="fe") : CARS; }
+
+function renderChips(){
+  const {tot,dn}=classCounts();
+  const base=baseCars();
+  const allDone=base.filter(c=>done.has(c.id)).length;
+  const chips=[["ALL","All",base.length,allDone]];
+  CLASS_ORDER.forEach(c=>chips.push([c,c,tot[c],dn[c]]));
+  $("#chips").innerHTML = chips.map(([k,lbl,t,d])=>
+    `<button class="chip ${activeClass===k?'active':''}" data-c="${k}">${lbl}<span class="n">${d}/${t}</span></button>`
+  ).join("");
+  $("#chips").querySelectorAll(".chip").forEach(b=>{
+    b.onclick=()=>{ activeClass=b.dataset.c; renderChips(); renderList(); };
+  });
+}
+
+function renderProgress(){
+  const base=baseCars();
+  const total=base.length;
+  const d=base.filter(c=>done.has(c.id)).length;
+  const o=base.filter(c=>owned.has(c.id)).length;
+  const pct = total? Math.round(d/total*100):0;
+  $("#photoN").textContent=d; $("#photoT").textContent=total;
+  $("#ownN").textContent=o;   $("#ownT").textContent=total;
+  $("#progBar").style.width = pct+"%";
+}
+
+const FILTERS=[
+  {key:"photo",label:"Shot",opts:[["all","All"],["yes","📷 Yes"],["no","◻ No"]]},
+  {key:"own",label:"Owned",opts:[["all","All"],["yes","🔑 Yes"],["no","✋ No"]]},
+];
+function renderFchips(){
+  let h="";
+  FILTERS.forEach((f,i)=>{
+    if(i) h+=`<span class="fsep"></span>`;
+    h+=`<span class="flabel">${f.label}</span>`;
+    const cur = f.key==="photo"?photoFilter:ownFilter;
+    f.opts.forEach(([v,lbl])=>{
+      h+=`<button class="fchip ${cur===v?'active':''}" data-f="${f.key}" data-v="${v}">${lbl}</button>`;
+    });
+  });
+  const el=$("#fchips"); el.innerHTML=h;
+  el.querySelectorAll(".fchip").forEach(b=>{
+    b.onclick=()=>{
+      if(b.dataset.f==="photo") photoFilter=b.dataset.v; else ownFilter=b.dataset.v;
+      renderFchips(); renderList();
+    };
+  });
+}
+
+function matches(c){
+  if(hideFEFlag && c.tag==="fe") return false;
+  if(activeClass!=="ALL" && c[3]!==activeClass) return false;
+  if(photoFilter==="yes" && !done.has(c.id)) return false;
+  if(photoFilter==="no"  &&  done.has(c.id)) return false;
+  if(ownFilter==="yes"   && !owned.has(c.id)) return false;
+  if(ownFilter==="no"    &&  owned.has(c.id)) return false;
+  if(query){
+    const hay=(c[1]+" "+c[2]+" "+c[0]+" "+c[3]).toLowerCase();
+    return query.split(/\s+/).every(t=>hay.includes(t));
+  }
+  return true;
+}
+
+function renderList(){
+  const groups={};
+  CLASS_ORDER.forEach(c=>groups[c]=[]);
+  CARS.forEach(c=>{ if(matches(c)) groups[c[3]].push(c); });
+
+  let html="";
+  CLASS_ORDER.forEach(cl=>{
+    const arr=groups[cl];
+    if(!arr.length) return;
+    const dn=arr.filter(c=>done.has(c.id)).length;
+    html+=`<section class="group"><div class="ghead"><h2>Class ${cl}</h2><span class="gcount">${dn}/${arr.length}</span></div><div class="card">`;
+    arr.forEach(c=>{
+      const on=done.has(c.id);
+      const ow=owned.has(c.id);
+      const badge = c.tag==="barn" ? '<span class="badge barn">🛖 Barn Find</span>'
+                  : c.tag==="fe" ? '<span class="badge fe">✨ Special</span>' : '';
+      html+=`<div class="row ${on?'done':''}" data-id="${c.id}">
+        <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0d12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span>
+        <span class="info"><span class="nm">${c[1]} ${c[2]}${badge}</span><span class="sub">${c[0]} · Class ${c[3]}</span></span>
+        <button class="own ${ow?'on':''}">🔑</button>
+      </div>`;
+    });
+    html+=`</div></section>`;
+  });
+  listEl.innerHTML = html || `<div class="empty">No cars match.<br>Try clearing the search or filter.</div>`;
+}
+
+listEl.addEventListener("click", e=>{
+  const row=e.target.closest(".row"); if(!row) return;
+  const id=row.dataset.id;
+  if(e.target.closest(".own")){
+    // toggle OWNED
+    if(owned.has(id)) owned.delete(id); else owned.add(id);
+    saveOwned();
+    const btn=row.querySelector(".own"); btn.classList.toggle("on", owned.has(id));
+    renderProgress();
+    if(ownFilter!=="all") renderList();
+    return;
+  }
+  // toggle PHOTOGRAPHED
+  if(done.has(id)) done.delete(id); else done.add(id);
+  saveDone();
+  row.classList.toggle("done", done.has(id));
+  renderProgress(); renderChips();
+  if(photoFilter!=="all") renderList();
+});
+
+// search
+const searchEl=$("#search");
+searchEl.addEventListener("input", ()=>{
+  query=searchEl.value.trim().toLowerCase();
+  $("#clrBtn").style.display = query? "block":"none";
+  renderList();
+});
+$("#clrBtn").onclick=()=>{ searchEl.value=""; query=""; $("#clrBtn").style.display="none"; renderList(); searchEl.focus(); };
+
+// ---- Menu sheet ----
+const scrim=$("#scrim"), sheet=$("#sheet");
+function openSheet(){ scrim.classList.add("open"); sheet.classList.add("open"); }
+function closeSheet(){ scrim.classList.remove("open"); sheet.classList.remove("open"); showMenu(); }
+$("#menuBtn").onclick=openSheet;
+scrim.onclick=closeSheet;
+
+function showMenu(){ $("#sheetMain").style.display="block"; $("#sheetIO").style.display="none"; }
+function showIO(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="block"; }
+
+$("#syncOwned").onclick=()=>{
+  if(!PRESET_OWNED.length){ alert("No owned list is built in yet. Send your garage screenshots and I'll populate it."); return; }
+  if(confirm("Set your Owned cars to the latest list ("+PRESET_OWNED.length+" cars)? This replaces current owned marks. Photographed marks are kept.")){
+    owned=new Set(PRESET_OWNED); saveOwned(); renderAll(); closeSheet();
+  }
+};
+$("#hideFE").onclick=()=>{
+  hideFEFlag=!hideFEFlag;
+  $("#feState").textContent = hideFEFlag? "Currently hiding Forza Editions etc.":"Currently showing Forza Editions etc.";
+  renderAll(); closeSheet();
+};
+
+let ioMode="export";
+$("#doExport").onclick=()=>{
+  ioMode="export";
+  $("#ioTitle").textContent="Export backup";
+  $("#ioDesc").textContent="Copy this text and save it somewhere safe (Notes, email). It backs up both owned and photographed. Paste it back later to restore.";
+  $("#ioBox").value=JSON.stringify({photo:[...done],owned:[...owned]});
+  $("#ioGo").textContent="Copy";
+  showIO();
+};
+$("#doImport").onclick=()=>{
+  ioMode="import";
+  $("#ioTitle").textContent="Import backup";
+  $("#ioDesc").textContent="Paste a previously exported backup here, then tap Restore. This replaces your current progress.";
+  $("#ioBox").value="";
+  $("#ioGo").textContent="Restore";
+  showIO();
+};
+$("#ioBack").onclick=showMenu;
+$("#ioGo").onclick=()=>{
+  if(ioMode==="export"){
+    const box=$("#ioBox"); box.select();
+    try{ navigator.clipboard.writeText(box.value); }catch(e){}
+    try{ document.execCommand("copy"); }catch(e){}
+    $("#ioGo").textContent="Copied ✓";
+    setTimeout(()=>{$("#ioGo").textContent="Copy";},1200);
+  } else {
+    try{
+      const data=JSON.parse($("#ioBox").value.trim());
+      if(Array.isArray(data)){            // legacy backup = photographed only
+        done=new Set(data);
+      } else if(data && typeof data==="object"){
+        done=new Set(data.photo||[]);
+        owned=new Set(data.owned||[]);
+      } else throw 0;
+      saveDone(); saveOwned();
+      renderAll(); closeSheet();
+    }catch(e){ alert("That doesn't look like a valid backup."); }
+  }
+};
+$("#doReset").onclick=()=>{
+  if(confirm("Uncheck every PHOTOGRAPHED car? Owned marks are kept. This can't be undone (unless you have a backup).")){
+    done=new Set(); saveDone(); renderAll(); closeSheet();
+  }
+};
+
+function renderAll(){ renderChips(); renderFchips(); renderProgress(); renderList(); }
+renderAll();
+</script>
+</body>
+</html>
