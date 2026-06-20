@@ -89,6 +89,84 @@
     display:flex;align-items:center;gap:4px;transition:.12s;
   }
   .own.on{background:#13314a;border-color:#2f7fe0;color:#9fd0ff;}
+  .edit{flex:0 0 auto;border:1.5px solid var(--line);background:transparent;color:var(--muted);border-radius:8px;padding:7px 9px;font-size:13px;cursor:pointer;margin-right:6px;}
+  .edit:active{background:var(--panel2);}
+  .badge.custom{background:#143226;color:#7fe0b0;border:1px solid #1f5a3d;}
+  .field{margin-bottom:11px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:.3px;}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px;font-size:16px;outline:none;}
+  /* ---- tab bar ---- */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:rgba(11,13,18,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+  .tabbar button{flex:1;background:none;border:none;color:var(--muted);font-size:11px;font-weight:600;padding:8px 0 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .tabbar button .ti{font-size:19px;line-height:1;}
+  .tabbar button.active{color:var(--accent);}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom));}
+  /* ---- mastery ---- */
+  .mhead{position:sticky;top:0;z-index:20;background:rgba(11,13,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 12px 10px;}
+  #mlist{padding:6px 10px 20px;}
+  .mrow{display:flex;align-items:center;gap:10px;padding:13px;border-top:1px solid var(--line);cursor:pointer;}
+  .mrow:active{background:var(--panel2);}
+  .mrow .mnm{flex:1;min-width:0;font-size:15px;font-weight:600;}
+  .mrow .msub{font-size:12.5px;color:var(--muted);margin-top:1px;font-weight:400;}
+  .mtag{flex:0 0 auto;font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;}
+  .mtag.has{background:#143226;color:#7fe0b0;border:1px solid #1f5a3d;}
+  .mtag.no{background:var(--chip);color:var(--muted);border:1px solid var(--line);}
+  .treewrap{padding:12px;}
+  .backbtn{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer;}
+  .grid{position:relative;width:100%;max-width:380px;margin:14px auto;aspect-ratio:1;}
+  .gcell{position:absolute;width:21%;height:21%;border-radius:14%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--panel2);border:2px solid var(--line);overflow:hidden;}
+  .gcell.empty{background:transparent;border:2px dashed #2c3547;}
+  .gcell.on{background:var(--accent);border-color:var(--accent);}      /* purchased/in-path */
+  .gcell.tgt{box-shadow:0 0 0 3px var(--good);}
+  .gcell.start{border-color:var(--good);}
+  .gcell img{width:74%;height:74%;object-fit:contain;border-radius:12%;}
+  .gcell .emoji{font-size:min(7vw,30px);}
+  .gcell .cost{position:absolute;bottom:1px;right:3px;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;}
+  .gcell .val{position:absolute;top:1px;left:0;right:0;text-align:center;font-size:9px;font-weight:800;color:#ffe79a;text-shadow:0 1px 2px #000;padding:0 2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .edge{position:absolute;background:#5a6a82;z-index:0;}
+  .edge.lit{background:var(--good);}
+  .conn{position:absolute;z-index:2;border:none;background:rgba(255,255,255,.07);cursor:pointer;border-radius:3px;}
+  .conn.on{background:#5a6a82;}
+  .treeinfo{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:8px;}
+  .treeinfo h4{margin:0 0 4px;font-size:15px;}
+  .treeinfo .pts{font-size:13px;color:var(--muted);}
+  .treeinfo .pts b{color:var(--good);font-size:16px;}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0;}
+  .perkpick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .perkopt{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;color:var(--muted);}
+  .perkopt .pic{font-size:24px;display:block;}
+  .perkopt img{width:34px;height:34px;object-fit:contain;border-radius:8px;display:block;margin:0 auto;}
+  .perklist .act{align-items:center;}
+  .gcell{z-index:1;}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  svg.edges line.edgeline{stroke:#5a6a82;stroke-width:1.8;}
+  svg.edges line.edgeline.lit{stroke:#36d399;stroke-width:2.4;}
+  svg.edges rect.conn{pointer-events:auto;fill:rgba(124,92,255,.18);stroke:rgba(124,92,255,.5);stroke-width:.4;cursor:pointer;}
+  svg.edges rect.conn.set{fill:rgba(90,106,130,.0);stroke:none;}
+  .perkitem{display:flex;align-items:center;gap:12px;padding:11px 4px;border-top:1px solid var(--line);cursor:pointer;}
+  .perkitem .pic{font-size:26px;width:34px;text-align:center;}
+  .perkitem img{width:34px;height:34px;object-fit:contain;border-radius:8px;}
+  .perkitem .pn{flex:1;min-width:0;}
+  .perkitem .pn b{font-size:14px;}
+  .perkitem .pn small{display:block;color:var(--muted);font-size:12px;}
+  /* ---- car config / garage ---- */
+  .rthumb{width:38px;height:38px;border-radius:8px;object-fit:cover;flex:0 0 auto;background:var(--panel2);}
+  .flagb{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+  .flagchecks{display:flex;flex-wrap:wrap;gap:8px;}
+  .flagchecks label{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;font-weight:600;cursor:pointer;}
+  .flagchecks input{width:auto;margin:0;}
+  .ministr{background:none;border:none;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;}
+  #edImgPrev{display:block;width:100%;max-height:170px;object-fit:contain;border-radius:10px;margin-bottom:8px;background:var(--panel2);}
+  .grow{display:flex;align-items:center;gap:11px;padding:11px 12px;border-top:1px solid var(--line);cursor:pointer;}
+  .grow:first-child{border-top:none;}
+  .grow:active{background:var(--panel2);}
+  .grow .gnm{flex:1;min-width:0;font-size:15px;font-weight:600;line-height:1.25;}
+  .grow .gsub{font-size:12px;color:var(--muted);margin-top:1px;font-weight:400;}
+  .gprice{font-size:12px;color:var(--good);font-weight:700;flex:0 0 auto;text-align:right;}
+  .gprice small{display:block;color:var(--muted);font-weight:500;}
+  .rdot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;}
+  .colorrow{display:flex;align-items:center;gap:10px;}
+  .colorrow input[type=color]{width:46px;height:38px;padding:2px;background:var(--bg);border:1px solid var(--line);border-radius:8px;}
   .statline{display:flex;gap:14px;font-size:13px;color:var(--muted);margin-bottom:5px;}
   .statline b{color:var(--txt);}
   .statline .own-stat b{color:#9fd0ff;}
@@ -133,9 +211,27 @@
   }
   .row-btns{display:flex;gap:10px;}
   .row-btns .act{margin-bottom:0;justify-content:center;}
+  /* ---- desktop / wide screens: center the app in a phone-width column ---- */
+  @media (min-width:700px){
+    body{background:#070809;}
+    #viewTracker,#viewGarage,#viewMastery{max-width:760px;margin:0 auto;min-height:100vh;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);}
+    header,.mhead{margin:0 auto;}
+    .tabbar{max-width:760px;left:50%;transform:translateX(-50%);border-left:1px solid var(--line);border-right:1px solid var(--line);border-top-left-radius:14px;border-top-right-radius:14px;}
+    .sheet{left:50%;right:auto;width:520px;max-width:calc(100vw - 32px);transform:translate(-50%,130%);border-radius:18px;bottom:84px;}
+    .sheet.open{transform:translate(-50%,0);}
+    .grid{max-width:440px;}
+    .row,.grow,.mrow{transition:background .1s;}
+    .row:hover,.grow:hover,.mrow:hover,.perkitem:hover{background:var(--panel2);}
+    .chip,.fchip,.own,.edit,.menu-btn,.backbtn,.tab{cursor:pointer;}
+  }
+  @media (min-width:1000px){
+    #viewTracker,#viewGarage,#viewMastery{max-width:860px;}
+    .tabbar{max-width:860px;}
+  }
 </style>
 </head>
 <body>
+<div id="viewTracker">
 <header>
   <div class="title">
     <h1>🏁 Horizon Promo Tracker</h1>
@@ -154,9 +250,34 @@
   </div>
   <div class="chips" id="chips"></div>
   <div class="fchips" id="fchips"></div>
+  <div class="fchips" id="gchips"></div>
 </header>
 
 <main id="list"></main>
+</div><!-- /viewTracker -->
+
+<div id="viewMastery" hidden>
+  <header class="mhead">
+    <div class="title"><h1 id="mTitle">🌳 Car Mastery</h1><button class="menu-btn" id="perksBtn">Perks</button></div>
+    <div class="search" id="mSearchWrap"><input id="msearch" type="search" autocomplete="off" placeholder="Find a car…"><button class="clr" id="mclr">✕</button></div>
+  </header>
+  <main id="mlist"></main>
+  <div id="treewrap" class="treewrap" hidden></div>
+</div>
+
+<div id="viewGarage" hidden>
+  <header class="mhead">
+    <div class="title"><h1>🚗 Garage</h1><button class="menu-btn" id="gAdd">➕ Add</button></div>
+    <div class="search"><input id="gsearch" type="search" autocomplete="off" placeholder="Find a car…"><button class="clr" id="gclr">✕</button></div>
+  </header>
+  <main id="glist"></main>
+</div>
+
+<nav class="tabbar">
+  <button data-tab="tracker" class="active"><span class="ti">🏁</span>Tracker</button>
+  <button data-tab="garage"><span class="ti">🚗</span>Garage</button>
+  <button data-tab="mastery"><span class="ti">🌳</span>Mastery</button>
+</nav>
 
 <div class="scrim" id="scrim"></div>
 <div class="sheet" id="sheet">
@@ -170,6 +291,25 @@
     <button class="act" id="doImport"><span class="ico">⬇️</span><span>Import backup<small>Restore from saved text</small></span></button>
     <button class="act danger" id="doReset"><span class="ico">♻️</span><span>Reset photographed<small>Uncheck every photographed car (keeps owned)</small></span></button>
   </div>
+  <div id="sheetEdit" style="display:none;">
+    <h3 id="editTitle">Add a car</h3>
+    <div class="field"><label>Image</label><img id="edImgPrev" alt=""><input id="edImg" type="file" accept="image/*" style="color:var(--muted)"><button type="button" id="edImgClear" class="ministr" style="margin-top:6px">Remove image</button></div>
+    <div class="field"><label>Name <span style="color:var(--muted);font-weight:400">(optional — overrides maker + model)</span></label><input id="edName" type="text" placeholder="leave blank to use maker + model"></div>
+    <div class="field"><label>Year</label><input id="edY" type="number" inputmode="numeric" placeholder="e.g. 2021"></div>
+    <div class="field"><label>Manufacturer</label><input id="edMk" type="text" placeholder="e.g. Toyota"></div>
+    <div class="field"><label>Model</label><input id="edMd" type="text" placeholder="e.g. GR Supra"></div>
+    <div class="field"><label>Stock class</label><select id="edCl"></select></div>
+    <div class="field"><label>Country</label><input id="edCo" type="text" list="coList" placeholder="e.g. Japan"><datalist id="coList"></datalist></div>
+    <div class="field"><label>Rarity</label><select id="edRarity"></select></div>
+    <div class="field"><label>Flags <button type="button" id="edFlagsManage" class="ministr">manage…</button></label><div id="edFlags" class="flagchecks"></div></div>
+    <div class="field"><label>Base price (credits)</label><input id="edPrice" type="number" inputmode="numeric" placeholder="e.g. 250000"><div id="edDisc" class="pts" style="margin-top:5px"></div></div>
+    <button type="button" class="act" id="edOpenTree" style="justify-content:center;margin-bottom:10px;">🌳 Open mastery tree</button>
+    <div class="row-btns">
+      <button class="act" id="edCancel">Cancel</button>
+      <button class="act" id="edSave" style="background:var(--accent);border-color:var(--accent);color:#fff;">Save</button>
+    </div>
+    <button class="act danger" id="edDelete" style="margin-top:10px;justify-content:center;">Delete this car</button>
+  </div>
   <div id="sheetIO" style="display:none;">
     <h3 id="ioTitle">Backup</h3>
     <p id="ioDesc"></p>
@@ -178,6 +318,64 @@
       <button class="act" id="ioBack">Back</button>
       <button class="act" id="ioGo" style="background:var(--accent);border-color:var(--accent);color:#fff;">Done</button>
     </div>
+  </div>
+</div>
+
+<div class="scrim" id="pkScrim"></div>
+<div class="sheet" id="pkSheet">
+  <div class="grab"></div>
+  <div id="pkChoose">
+    <h3 id="pkTitle">Choose a perk</h3>
+    <div class="perkpick" id="pkGrid"></div>
+    <div class="row-btns" style="margin-top:12px;">
+      <button class="act danger" id="pkClear" style="justify-content:center;">Clear cell</button>
+    </div>
+  </div>
+  <div id="pkValView" style="display:none;">
+    <h3 id="pkValTitle">Value</h3>
+    <div class="field"><label id="pkValLabel">Value</label><input id="pkValInput" type="text" inputmode="text" list="pkValList" autocomplete="off"><datalist id="pkValList"></datalist></div>
+    <div id="pkValChips" class="chips" style="margin-bottom:10px;"></div>
+    <div class="row-btns"><button class="act" id="pkValBack" style="justify-content:center;">Back</button><button class="act" id="pkValSave" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">Save</button></div>
+  </div>
+</div>
+
+<div class="scrim" id="pcScrim"></div>
+<div class="sheet" id="pcSheet">
+  <div class="grab"></div>
+  <div id="pcListView">
+    <h3>Perks catalog</h3>
+    <p>Define perk types once (icon, name, description) — reused across all cars. Add your own square icons here.</p>
+    <div class="perklist" id="pcItems"></div>
+    <button class="act" id="pcAdd" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">➕ Add perk</button>
+  </div>
+  <div id="pcEditView" style="display:none;">
+    <h3 id="pcEditTitle">Edit perk</h3>
+    <div class="field"><label>Name</label><input id="pcName" type="text"></div>
+    <div class="field"><label>Description</label><input id="pcDesc" type="text"></div>
+    <div class="field"><label><input type="checkbox" id="pcHasVar" style="width:auto;margin-right:7px;vertical-align:middle"> This perk has a value (e.g. XP amount, credits, multiplier)</label></div>
+    <div class="field"><label>Value label</label><input id="pcVarLabel" type="text" placeholder="e.g. XP, Credits, Multiplier"></div>
+    <div class="field"><label>Known values (comma-separated — picked from when assigning)</label><input id="pcVars" type="text" placeholder="e.g. 5000, 10000, 15000"></div>
+    <div class="field"><label>Icon — type an emoji, or upload a square image</label><input id="pcIcon" type="text" placeholder="e.g. 💰"><input id="pcImg" type="file" accept="image/*" style="margin-top:8px;color:var(--muted);"></div>
+    <div class="row-btns"><button class="act" id="pcBack" style="justify-content:center;">Back</button><button class="act" id="pcSave" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">Save</button></div>
+    <button class="act danger" id="pcDel" style="margin-top:10px;justify-content:center;">Delete perk</button>
+  </div>
+</div>
+
+<div class="scrim" id="flScrim"></div>
+<div class="sheet" id="flSheet">
+  <div class="grab"></div>
+  <div id="flListView">
+    <h3>Flags</h3>
+    <p>Special categories you can tag cars with. Add your own, rename, or recolour.</p>
+    <div id="flItems"></div>
+    <button class="act" id="flAdd" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">➕ Add flag</button>
+  </div>
+  <div id="flEditView" style="display:none;">
+    <h3 id="flEditTitle">Edit flag</h3>
+    <div class="field"><label>Label</label><input id="flLabel" type="text" placeholder="e.g. DLC car"></div>
+    <div class="field"><label>Colour</label><div class="colorrow"><input id="flColor" type="color" value="#7c5cff"><span id="flPrev" class="flagb">Preview</span></div></div>
+    <div class="row-btns"><button class="act" id="flBack" style="justify-content:center;">Back</button><button class="act" id="flSave" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">Save</button></div>
+    <button class="act danger" id="flDel" style="margin-top:10px;justify-content:center;">Delete flag</button>
   </div>
 </div>
 
@@ -278,8 +476,13 @@ const CARS = [
 ];
 
 const CLASS_ORDER = ["D","C","B","A","S1","S2","R"];
-const STORE_KEY = "fh6_promo_v1";   // photographed ids
-const OWN_KEY   = "fh6_owned_v1";   // owned ids
+const COUNTRY = {
+"AMG Transport Dynamics":"Other","Abarth":"Italy","Acura":"Japan","Alfa Romeo":"Italy","Alumicraft":"USA","Apollo":"Germany","Ariel":"UK","Aston Martin":"UK","Audi":"Germany","Austin-Healey":"UK","Autozam":"Japan","BAC":"UK","BMW":"Germany","Bentley":"UK","Buick":"USA","Cadillac":"USA","Can-Am":"Canada","Casey Currie Motorsports":"USA","Chevrolet":"USA","Datsun":"Japan","DeBerti":"USA","DeLorean":"USA","Dodge":"USA","Ferrari":"Italy","Ford":"USA","Formula Drift":"Other","Funco Motorsports":"USA","GMC":"USA","GR":"Japan","Gordon Murray Automotive":"UK","HSV":"Australia","Hennessey":"USA","Holden":"Australia","Honda":"Japan","Hyundai":"South Korea","Jaguar":"UK","Jeep":"USA","Jimco":"USA","KTM":"Austria","Koenigsegg":"Sweden","Lamborghini":"Italy","Lancia":"Italy","Land Rover":"UK","Lexus":"Japan","Lincoln":"USA","Lotus":"UK","Lucid":"USA","MG":"UK","MINI":"UK","Maserati":"Italy","Mazda":"Japan","McLaren":"UK","Mercedes-AMG":"Germany","Mercedes-Benz":"Germany","Meyers":"USA","Mitsubishi":"Japan","Nissan":"Japan","Noble":"UK","Opel":"Germany","Pagani":"Italy","Peel":"UK","Penhall":"USA","Peugeot":"France","Plymouth":"USA","Polaris":"USA","Pontiac":"USA","Porsche":"Germany","RJ Anderson":"USA","Radical":"UK","Ram":"USA","Reliant":"UK","Renault":"France","Rimac":"Croatia","Rivian":"USA","SIERRA Cars":"Other","SRT":"USA","Saleen":"USA","Schuppan":"Japan","Shelby":"USA","Subaru":"Japan","TVR":"UK","Toyota":"Japan","Ultima":"UK","Volkswagen":"Germany","Volvo":"Sweden","Wuling":"China","Zenvo":"Denmark"
+};
+const countryOf = c => c.co || COUNTRY[c[1]] || "Other";
+const STORE_KEY  = "fh6_promo_v1";   // photographed ids
+const OWN_KEY    = "fh6_owned_v1";   // owned ids
+const CUSTOM_KEY = "fh6_custom_v1";  // user-added cars + edits + hidden built-ins
 
 // ---- Detected from garage + promo screenshots (auto-populated) ----
 const PRESET_OWNED = ["ariel|2016|nomad","aston martin|2016|vulcan","aston martin|2017|vulcan amr pro","aston martin|2021|dbx","aston martin|2022|valkyrie amr pro","audi|1986|#2 sport quattro s1","audi|2009|rs 6","audi|2010|tt rs coupé","audi|2011|rs 3 sportback","audi|2015|s1","audi|2016|r8 v10 plus","audi|2018|rs 4 avant","audi|2020|rs 3 sedan","audi|2021|rs e-tron gt","audi|2023|r8 coupé v10 gt rwd","austin-healey|1965|3000 mkiii","autozam|1993|az-1","bentley|2021|continental gt convertible","bmw|1981|m1","bmw|1988|m3","bmw|1997|m3","bmw|2003|m5","bmw|2005|m3","bmw|2011|x5 m","bmw|2019|z4 roadster","bmw|2020|m2 competition coupé","bmw|2020|m8 competition coupé","bmw|2021|m4 competition coupé","bmw|2022|ix xdrive50","cadillac|2016|ats-v","can-am|2018|maverick x rs turbo r","chevrolet|1955|150 utility sedan","chevrolet|1957|bel air","chevrolet|1964|impala super sport 409","chevrolet|1970|corvette zr-1","chevrolet|1972|k-10 custom","chevrolet|1979|camaro z28","chevrolet|1988|monte carlo super sport","chevrolet|1995|corvette zr-1","chevrolet|2020|corvette stingray coupe","chevrolet|2020|silverado lt trail boss","datsun|1969|2000 roadster","datsun|1970|510","datsun|1972|#269 attacking the clock racing 240z","delorean|1982|dmc-12","dodge|1969|charger daytona hemi","dodge|1969|charger r/t","dodge|1999|viper gts acr forza edition","dodge|2018|challenger srt demon","ferrari|1962|250 gt berlinetta lusso","ferrari|1967|#24 spa 330 p4","ferrari|1989|f40 competizione","ferrari|1994|f355 berlinetta","ferrari|2017|j50 preorder car","ferrari|2018|fxx-k evo welcome pack","ferrari|2020|roma","ford|1968|mustang gt 2+2 fastback","ford|1973|capri rs3100","ford|1985|rs200 evolution","ford|1986|f-150 xlt lariat","ford|1986|f-150 xlt lariat forza edition","ford|1987|sierra cosworth rs500","ford|1992|escort rs cosworth","ford|2003|f-150 svt lightning","ford|2005|gt","ford|2009|focus rs","ford|2010|crown victoria police interceptor","ford|2013|mustang shelby gt500","ford|2014|ranger t6 rally raid","ford|2017|#14 rahal letterman lanigan racing fiesta","ford|2017|#25 'brocky' ultra4 bronco rtr","ford|2017|focus rs","ford|2017|gt","ford|2020|super duty f-450 drw platinum","ford|2022|focus st","ford|2023|f-150 raptor r welcome pack","ford|2023|fiesta st","ford|2024|mustang dark horse","formula drift|1989|#98 bmw 325i","formula drift|2007|#117 599 gtb fiorano","formula drift|2009|#99 mazda rx-8","formula drift|2019|#411 toyota corolla hatchback","formula drift|2023|#64 forsberg racing nissan z","funco motorsports|2018|f9","gmc|1970|jimmy","gordon murray automotive|2020|t.50","honda|1984|city e ii","honda|1986|civic si","honda|1990|#19 101 motorsport crx wtac","honda|1991|beat","honda|1991|cr-x sir","honda|1992|#21 hardrace/jdmyard civic wtac","honda|1994|acty","honda|1994|prelude si","honda|1997|civic type r","honda|2001|#33 integra wtac","honda|2003|s2000","honda|2004|#52 evasive motorsports s2000 wtac","honda|2004|civic type r","honda|2005|nsx-r","honda|2005|nsx-r gt","honda|2007|civic type r","honda|2015|ridgeline baja trophy truck","honda|2022|e","hsv|2014|limited edition gen-f gts maloo","hyundai|2019|veloster n","hyundai|2022|n vision 74","jaguar|1991|sport xjr-15","jeep|2012|wrangler rubicon","jeep|2020|jt","jimco|2020|#179 hammerhead class 1","koenigsegg|2024|gemera","ktm|2018|x-bow gt4","lamborghini|1988|countach lp5000 qv","lamborghini|1997|diablo sv","lamborghini|2011|sesto elemento","lamborghini|2022|aventador lp 780-4 ultimae","lamborghini|2022|huracán sterrato","lamborghini|2022|huracán tecnica","lamborghini|2024|revuelto","lancia|1974|stratos hf stradale","lancia|1992|delta hf integrale evo","land rover|2015|range rover sport svr","lexus|2021|lc 500","lincoln|1962|continental","lotus|2018|exige cup 430","lotus|2018|scura motorsports exige wtac","lotus|2020|evija","lotus|2020|evija forza edition","lotus|2023|emira","maserati|1997|ghibli cup","maserati|2004|mc12","mazda|1973|rx-3 forza edition","mazda|1985|rx-7 gsl-se","mazda|1991|#55 787b","mazda|1992|rx-7 type r","mazda|1994|mx-5 miata","mazda|1994|mx-5 miata forza edition","mazda|2005|mazdaspeed mx-5","mazda|2008|furai","mazda|2011|rx-8 r3","mazda|2013|mx-5","mazda|2016|mx-5","mazda|2017|mx-5 cup","mazda|2022|mx-5 miata rf","mclaren|2015|570s coupé","mclaren|2021|sabre","mercedes-amg|2015|gt s","mercedes-amg|2016|c 63 s coupé","mercedes-amg|2018|e 63 s","mercedes-amg|2020|gt black series welcome pack","mercedes-amg|2020|slc 43 final edition","mercedes-amg|2021|one","mercedes-amg|2021|sl 63","mercedes-benz|1987|amg hammer coupe","mercedes-benz|1990|190 e 2.5-16 evolution ii","mercedes-benz|2013|g 65 amg","meyers|2023|manx 2.0","mg|1986|metro 6r4","mini|2021|john cooper works gp","mitsubishi|1990|#269 attacking the clock racing minicab time attack","mitsubishi|1995|lancer evolution iii gsr","mitsubishi|1995|montero exceed 2800 td","mitsubishi|1997|gto","mitsubishi|1997|montero evolution","mitsubishi|2001|lancer evolution vi gsr tm edition","mitsubishi|2004|lancer evolution viii mr","mitsubishi|2005|#1 sierra sierra enterprises lancer evolution time attack","mitsubishi|2006|lancer evolution ix mr","mitsubishi|2008|lancer evolution x gsr","nissan|1971|skyline 2000gt-r","nissan|1983|#11 tomica skyline turbo super silhouette","nissan|1985|safari turbo","nissan|1987|be-1","nissan|1989|pao","nissan|1989|s-cargo","nissan|1989|s-cargo forza edition","nissan|1989|silvia k's","nissan|1990|#12 skyline gt-r (bnr32 gr.a) jtc","nissan|1990|pulsar gti-r","nissan|1991|figaro","nissan|1993|#32 skyline wtac 'xtreme gtr'","nissan|1994|silvia k's","nissan|1995|gloria gran turismo","nissan|1997|skyline gt-r v-spec","nissan|1997|stagea rs four v","nissan|1998|#23 pennzoil nismo skyline gt-r","nissan|1998|r390 (gt1)","nissan|2000|#36 dream project s15 silvia wtac","nissan|2003|fairlady z","nissan|2012|gt-r black edition (r35)","nissan|2019|370z nismo","nissan|2020|gt-r nismo (r35)","nissan|2024|z nismo","pagani|2021|huayra r","peel|1962|p50","peugeot|1984|205 turbo 16","peugeot|2007|207 super 2000","plymouth|1958|fury","polaris|2021|rzr pro xp ultimate","porsche|1970|#3 917 lh forza edition","porsche|1982|911 turbo 3.3","porsche|1987|959","porsche|1993|928 gts","porsche|2022|718 cayman gt4 rs","porsche|2023|911 rallye","ram|2024|1500 trx","renault|1967|8 gordini","renault|2010|megane rs 250","rj anderson|2021|#37 polaris rzr pro 4 truck","saleen|2017|s7 lm","schuppan|1993|962cr","sierra cars|2021|rx3","srt|2013|viper gts","subaru|1980|brat gl","subaru|1990|legacy rs","subaru|1994|vivio rx-r","subaru|1996|svx","subaru|1998|impreza 22b-sti version","subaru|2004|impreza wrx sti","subaru|2005|impreza wrx sti","subaru|2005|legacy b4 2.0 gt","subaru|2008|impreza wrx sti","subaru|2011|wrx sti","subaru|2013|brz","subaru|2018|wrx sti arx supercar","subaru|2019|sti s209","subaru|2022|brz forza edition","toyota|1965|sports 800","toyota|1969|2000gt","toyota|1974|corolla sr5","toyota|1979|fj40","toyota|1985|sprinter trueno gt apex","toyota|1989|mr2 sc","toyota|1991|chaser gt twin turbo","toyota|1991|sera","toyota|1994|celica gt-four st205","toyota|1995|j&j motorsport supra wtac","toyota|1996|starlet glanza v","toyota|1997|chaser 2.5 tourer v","toyota|1997|soarer 2.5 gt-t","toyota|1998|supra rz","toyota|1999|altezza rs200 z edition","toyota|2003|celica sport specialty ii","toyota|2005|crown super deluxe taxi","toyota|2013|86","toyota|2016|land cruiser arctic trucks at37","toyota|2017|jpn taxi","toyota|2019|4runner trd pro","toyota|2019|tacoma trd pro","toyota|2019|tacoma trd pro forza edition","toyota|2020|gr supra","toyota|2021|gr yaris","toyota|2022|gr86","tvr|2005|sagaris","ultima|2015|evolution coupe 1020","volkswagen|1963|beetle","volkswagen|1963|type 2 de luxe","volkswagen|1982|pickup lx","volkswagen|1983|golf gti","volkswagen|1989|rallye golf","volkswagen|1992|golf gti 16v mk2","volkswagen|1995|corrado vr6","volkswagen|2010|golf r","volkswagen|2011|scirocco r","volkswagen|2014|golf r","volkswagen|2017|#34 andretti rally cross beetle","volkswagen|2021|golf r","volvo|1983|242 turbo evolution","wuling|2013|sunshine s","wuling|2013|sunshine s forza edition","wuling|2022|hongguang mini ev"];
@@ -298,6 +501,8 @@ let query = "";
 let hideFEFlag = false;
 let photoFilter = "all";   // all | yes | no
 let ownFilter = "all";     // all | yes | no
+let groupMode = "class";   // class | maker | year | country
+let dir = "asc";           // asc | desc
 
 function loadDone(){
   try{
@@ -315,6 +520,51 @@ function loadOwned(){
   }catch(e){ return new Set(); }
 }
 function saveOwned(){ try{ localStorage.setItem(OWN_KEY, JSON.stringify([...owned])); }catch(e){} }
+function loadCustom(){
+  try{ const c=JSON.parse(localStorage.getItem(CUSTOM_KEY)||"{}"); return {add:c.add||[], edit:c.edit||{}, del:c.del||[]}; }
+  catch(e){ return {add:[], edit:{}, del:[]}; }
+}
+function saveCustom(c){ try{ localStorage.setItem(CUSTOM_KEY, JSON.stringify(c)); }catch(e){} }
+
+// LIST = built-in CARS with edits applied + user-added cars, minus hidden ones.
+// Each item is [year,maker,model,class] plus .id (stable), .tag, .co (country), .custom.
+let LIST=[];
+function buildList(){
+  const cu=loadCustom(), editMap=cu.edit, del=new Set(cu.del);
+  LIST=[];
+  CARS.forEach(c=>{
+    if(del.has(c.id)) return;
+    const e=editMap[c.id];
+    const a=[ e?e.y:c[0], e?e.mk:c[1], e?e.md:c[2], e?e.cl:c[3] ];
+    a.id=c.id; a.tag=e?(e.tag||""):c.tag; a.co=e?(e.co||COUNTRY[e.mk]||"Other"):(COUNTRY[c[1]]||"Other"); a.custom=false;
+    LIST.push(a);
+  });
+  cu.add.forEach(x=>{
+    if(del.has(x.id)) return;
+    const a=[x.y,x.mk,x.md,x.cl]; a.id=x.id; a.tag=x.tag||""; a.co=x.co||COUNTRY[x.mk]||"Other"; a.custom=true;
+    LIST.push(a);
+  });
+}
+
+// ---- car config (rarity / flags / price / name) + images ----
+const CARCFG_KEY="fh6_carcfg_v1", FLAGS_KEY="fh6_flags_v1";
+function loadCfg(){ try{ return JSON.parse(localStorage.getItem(CARCFG_KEY))||{}; }catch(e){ return {}; } }
+function saveCfg(o){ try{ localStorage.setItem(CARCFG_KEY,JSON.stringify(o)); }catch(e){} }
+function carCfg(id){ return loadCfg()[id]||{}; }
+const FLAG_SEED=[{key:"barn",label:"Barn Find",color:"#ffb86b"},{key:"treasure",label:"Treasure",color:"#7fe0b0"},{key:"fe",label:"Forza Edition",color:"#c9a6ff"},{key:"dlc",label:"DLC",color:"#6fb1ff"},{key:"mastery",label:"Mastery-locked",color:"#ff9bd0"}];
+function loadFlags(){ try{ const f=JSON.parse(localStorage.getItem(FLAGS_KEY)); return Array.isArray(f)&&f.length?f:FLAG_SEED.slice(); }catch(e){ return FLAG_SEED.slice(); } }
+function saveFlags(f){ try{ localStorage.setItem(FLAGS_KEY,JSON.stringify(f)); }catch(e){} }
+function flagBy(k){ return loadFlags().find(f=>f.key===k); }
+const RARITY=[{key:"common",label:"Common",color:"#36d399"},{key:"rare",label:"Rare",color:"#6fb1ff"},{key:"epic",label:"Epic",color:"#c77dff"},{key:"legendary",label:"Legendary",color:"#ff9d3c"}];
+function rarityBy(k){ return RARITY.find(r=>r.key===k); }
+function carFlags(c){ const cf=carCfg(c.id); if(cf.flags&&cf.flags.length) return cf.flags; return c.tag?[c.tag]:[]; }
+function fmtCr(n){ return (+n).toLocaleString("en-US"); }
+// images live in IndexedDB (too big for localStorage)
+let IMAGES={}, IMGDB=null;
+function idbOpen(cb){ try{ const rq=indexedDB.open("fh6img",1); rq.onupgradeneeded=()=>rq.result.createObjectStore("images"); rq.onsuccess=()=>{IMGDB=rq.result;cb&&cb();}; rq.onerror=()=>{cb&&cb();}; }catch(e){ cb&&cb(); } }
+function idbPutImg(id,d){ if(!IMGDB)return; try{ IMGDB.transaction("images","readwrite").objectStore("images").put(d,id); }catch(e){} }
+function idbDelImg(id){ if(!IMGDB)return; try{ IMGDB.transaction("images","readwrite").objectStore("images").delete(id); }catch(e){} }
+function idbAllImgs(cb){ if(!IMGDB){cb({});return;} try{ const out={},rq=IMGDB.transaction("images","readonly").objectStore("images").openCursor(); rq.onsuccess=()=>{const c=rq.result; if(c){out[c.key]=c.value;c.continue();}else cb(out);}; rq.onerror=()=>cb(out); }catch(e){ cb({}); } }
 
 const $ = s => document.querySelector(s);
 const listEl = $("#list");
@@ -322,11 +572,11 @@ const listEl = $("#list");
 function classCounts(){
   const tot={}, dn={};
   CLASS_ORDER.forEach(c=>{tot[c]=0;dn[c]=0;});
-  CARS.forEach(c=>{ if(hideFEFlag && c.tag==="fe") return; tot[c[3]]++; if(done.has(c.id)) dn[c[3]]++; });
+  LIST.forEach(c=>{ if(hideFEFlag && c.tag==="fe") return; tot[c[3]]=(tot[c[3]]||0)+1; if(done.has(c.id)) dn[c[3]]=(dn[c[3]]||0)+1; });
   return {tot,dn};
 }
 
-function baseCars(){ return hideFEFlag ? CARS.filter(c=>c.tag!=="fe") : CARS; }
+function baseCars(){ return hideFEFlag ? LIST.filter(c=>c.tag!=="fe") : LIST; }
 
 function renderChips(){
   const {tot,dn}=classCounts();
@@ -376,8 +626,20 @@ function renderFchips(){
   });
 }
 
+const GROUPS=[["class","Class"],["maker","Maker"],["year","Year"],["country","Country"]];
+function renderGchips(){
+  let h=`<span class="flabel">Group</span>`;
+  GROUPS.forEach(([v,lbl])=>{
+    h+=`<button class="fchip ${groupMode===v?'active':''}" data-g="${v}">${lbl}</button>`;
+  });
+  h+=`<span class="fsep"></span><button class="fchip" data-dir="1">${dir==="asc"?"▲ Asc":"▼ Desc"}</button>`;
+  const el=$("#gchips"); el.innerHTML=h;
+  el.querySelectorAll("[data-g]").forEach(b=>{ b.onclick=()=>{ groupMode=b.dataset.g; renderGchips(); renderList(); }; });
+  el.querySelector("[data-dir]").onclick=()=>{ dir = dir==="asc"?"desc":"asc"; renderGchips(); renderList(); };
+}
+
 function matches(c){
-  if(hideFEFlag && c.tag==="fe") return false;
+  if(hideFEFlag && carFlags(c).includes("fe")) return false;
   if(activeClass!=="ALL" && c[3]!==activeClass) return false;
   if(photoFilter==="yes" && !done.has(c.id)) return false;
   if(photoFilter==="no"  &&  done.has(c.id)) return false;
@@ -390,36 +652,65 @@ function matches(c){
   return true;
 }
 
+function flagBadges(c){
+  let h = carFlags(c).map(k=>{ const f=flagBy(k); return f?`<span class="flagb" style="background:${f.color}22;color:${f.color};border:1px solid ${f.color}55">${f.label}</span>`:""; }).join("");
+  if(c.custom) h += '<span class="badge custom">✎ Custom</span>';
+  return h;
+}
+function rowHtml(c){
+  const on=done.has(c.id), ow=owned.has(c.id), cf=carCfg(c.id);
+  const rc=cf.rarity?rarityBy(cf.rarity):null;
+  const img=IMAGES[c.id]?`<img class="rthumb" src="${IMAGES[c.id]}" alt="">`:"";
+  const nm=cf.name||`${c[1]} ${c[2]}`;
+  const accent=rc?`border-left:4px solid ${rc.color};padding-left:9px;`:"";
+  return `<div class="row ${on?'done':''}" data-id="${c.id}" style="${accent}">
+    <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0d12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span>
+    ${img}
+    <span class="info"><span class="nm">${nm}${flagBadges(c)}</span><span class="sub">${c[0]} · ${c[1]} · Class ${c[3]} · ${countryOf(c)}</span></span>
+    <button class="edit" title="Edit">✎</button>
+    <button class="own ${ow?'on':''}">🔑</button>
+  </div>`;
+}
+function groupKeyOf(c){
+  if(groupMode==="class")   return c[3];
+  if(groupMode==="maker")   return c[1];
+  if(groupMode==="country") return countryOf(c);
+  return String(c[0]); // year
+}
+function groupTitle(k){ return groupMode==="class" ? `Class ${k}` : k; }
+function sortWithin(arr){
+  arr.sort((a,b)=>{
+    if(groupMode==="maker") return a[0]-b[0] || a[2].localeCompare(b[2]);
+    if(groupMode==="year")  return a[1].localeCompare(b[1]) || a[2].localeCompare(b[2]);
+    // class or country: by maker, then year
+    return a[1].localeCompare(b[1]) || a[0]-b[0];
+  });
+}
 function renderList(){
-  const groups={};
-  CLASS_ORDER.forEach(c=>groups[c]=[]);
-  CARS.forEach(c=>{ if(matches(c)) groups[c[3]].push(c); });
+  const map=new Map();
+  for(const c of LIST){ if(!matches(c)) continue; const k=groupKeyOf(c); (map.get(k)||map.set(k,[]).get(k)).push(c); }
+
+  let keys=[...map.keys()];
+  if(groupMode==="class")      keys=CLASS_ORDER.filter(k=>map.has(k));
+  else if(groupMode==="year")  keys.sort((a,b)=>(+a)-(+b));
+  else                         keys.sort((a,b)=>a.localeCompare(b));
+  if(dir==="desc") keys.reverse();
 
   let html="";
-  CLASS_ORDER.forEach(cl=>{
-    const arr=groups[cl];
-    if(!arr.length) return;
+  for(const k of keys){
+    const arr=map.get(k); sortWithin(arr);
     const dn=arr.filter(c=>done.has(c.id)).length;
-    html+=`<section class="group"><div class="ghead"><h2>Class ${cl}</h2><span class="gcount">${dn}/${arr.length}</span></div><div class="card">`;
-    arr.forEach(c=>{
-      const on=done.has(c.id);
-      const ow=owned.has(c.id);
-      const badge = c.tag==="barn" ? '<span class="badge barn">🛖 Barn Find</span>'
-                  : c.tag==="fe" ? '<span class="badge fe">✨ Special</span>' : '';
-      html+=`<div class="row ${on?'done':''}" data-id="${c.id}">
-        <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0d12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></span>
-        <span class="info"><span class="nm">${c[1]} ${c[2]}${badge}</span><span class="sub">${c[0]} · Class ${c[3]}</span></span>
-        <button class="own ${ow?'on':''}">🔑</button>
-      </div>`;
-    });
+    html+=`<section class="group"><div class="ghead"><h2>${groupTitle(k)}</h2><span class="gcount">${dn}/${arr.length}</span></div><div class="card">`;
+    for(const c of arr) html+=rowHtml(c);
     html+=`</div></section>`;
-  });
+  }
   listEl.innerHTML = html || `<div class="empty">No cars match.<br>Try clearing the search or filter.</div>`;
 }
 
 listEl.addEventListener("click", e=>{
   const row=e.target.closest(".row"); if(!row) return;
   const id=row.dataset.id;
+  if(e.target.closest(".edit")){ openEdit(id); return; }
   if(e.target.closest(".own")){
     // toggle OWNED
     if(owned.has(id)) owned.delete(id); else owned.add(id);
@@ -453,8 +744,101 @@ function closeSheet(){ scrim.classList.remove("open"); sheet.classList.remove("o
 $("#menuBtn").onclick=openSheet;
 scrim.onclick=closeSheet;
 
-function showMenu(){ $("#sheetMain").style.display="block"; $("#sheetIO").style.display="none"; }
-function showIO(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="block"; }
+function showMenu(){ $("#sheetMain").style.display="block"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="none"; }
+function showIO(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="block"; $("#sheetEdit").style.display="none"; }
+function showEdit(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="block"; }
+
+// ---- Add / edit cars (Car Config) ----
+(function initEditForm(){
+  $("#edCl").innerHTML = CLASS_ORDER.map(c=>`<option value="${c}">${c}</option>`).join("");
+  $("#coList").innerHTML = [...new Set(Object.values(COUNTRY))].sort().map(c=>`<option value="${c}">`).join("");
+  $("#edRarity").innerHTML = `<option value="">None</option>`+RARITY.map(r=>`<option value="${r.key}">${r.label}</option>`).join("");
+})();
+let editId=null, edImgState={changed:false,data:null};
+function buildFlagChecks(sel){
+  $("#edFlags").innerHTML = loadFlags().map(f=>`<label><input type="checkbox" value="${f.key}" ${sel.includes(f.key)?"checked":""}><span class="rdot" style="background:${f.color}"></span>${f.label}</label>`).join("");
+}
+function selectedFlags(){ return [...$("#edFlags").querySelectorAll("input:checked")].map(i=>i.value); }
+function showEdImg(d){ const el=$("#edImgPrev"); if(d){ el.src=d; el.style.display="block"; } else { el.removeAttribute("src"); el.style.display="none"; } }
+function updateDisc(){ const v=parseInt($("#edPrice").value,10); $("#edDisc").innerHTML = v>0 ? `With 5% home discount: <b style="color:var(--good)">${fmtCr(Math.round(v*0.95))}</b> CR` : ""; }
+function resizeImg(file,max,cb){ const fr=new FileReader(); fr.onload=()=>{ const im=new Image(); im.onload=()=>{ const s=Math.min(1,max/Math.max(im.width,im.height)); const cw=Math.max(1,Math.round(im.width*s)),ch=Math.max(1,Math.round(im.height*s)); const cv=document.createElement("canvas"); cv.width=cw; cv.height=ch; cv.getContext("2d").drawImage(im,0,0,cw,ch); try{ cb(cv.toDataURL("image/jpeg",0.82)); }catch(e){ cb(fr.result); } }; im.onerror=()=>cb(fr.result); im.src=fr.result; }; fr.readAsDataURL(file); }
+$("#edImg").onchange=e=>{ const f=e.target.files[0]; if(!f)return; resizeImg(f,280,d=>{ edImgState={changed:true,data:d}; showEdImg(d); }); };
+$("#edImgClear").onclick=()=>{ edImgState={changed:true,data:null}; showEdImg(null); $("#edImg").value=""; };
+$("#edPrice").oninput=updateDisc;
+function openEdit(id){
+  const c=LIST.find(x=>x.id===id); if(!c) return;
+  editId=id; const cf=carCfg(id);
+  $("#editTitle").textContent="Edit car";
+  $("#edY").value=c[0]; $("#edMk").value=c[1]; $("#edMd").value=c[2]; $("#edCl").value=c[3]; $("#edCo").value=countryOf(c);
+  $("#edName").value=cf.name||""; $("#edRarity").value=cf.rarity||""; $("#edPrice").value=(cf.price!=null?cf.price:"");
+  buildFlagChecks(carFlags(c)); updateDisc();
+  edImgState={changed:false,data:null}; showEdImg(IMAGES[id]||null); $("#edImg").value="";
+  $("#edDelete").style.display="flex"; $("#edOpenTree").style.display="flex";
+  openSheet(); showEdit();
+}
+function openAdd(){
+  editId=null;
+  $("#editTitle").textContent="Add a car";
+  $("#edY").value=""; $("#edMk").value=""; $("#edMd").value=""; $("#edCl").value="A"; $("#edCo").value="";
+  $("#edName").value=""; $("#edRarity").value=""; $("#edPrice").value="";
+  buildFlagChecks([]); updateDisc();
+  edImgState={changed:false,data:null}; showEdImg(null); $("#edImg").value="";
+  $("#edDelete").style.display="none"; $("#edOpenTree").style.display="none";
+  openSheet(); showEdit();
+}
+$("#edCancel").onclick=showMenu;
+$("#edOpenTree").onclick=()=>{ if(editId==null)return; const id=editId; closeSheet(); switchTab("mastery"); openCarTree(id); };
+$("#edSave").onclick=()=>{
+  const y=parseInt($("#edY").value,10), mk=$("#edMk").value.trim(), md=$("#edMd").value.trim();
+  const cl=$("#edCl").value, co=$("#edCo").value.trim()||"Other";
+  if(!mk||!md||!y){ alert("Please fill in year, manufacturer and model."); return; }
+  const cu=loadCustom(); let id=editId;
+  if(editId===null){ id="x"+Date.now().toString(36)+Math.floor(Math.random()*1e4); cu.add.push({id,y,mk,md,cl,co,tag:""}); }
+  else { const a=cu.add.find(z=>z.id===editId); if(a) Object.assign(a,{y,mk,md,cl,co}); else cu.edit[editId]={y,mk,md,cl,co}; }
+  saveCustom(cu);
+  const cfg=loadCfg(); const name=$("#edName").value.trim(), rarity=$("#edRarity").value, price=parseInt($("#edPrice").value,10), fl=selectedFlags();
+  const rec={}; if(name)rec.name=name; if(rarity)rec.rarity=rarity; if(fl.length)rec.flags=fl; if(price>0)rec.price=price;
+  if(Object.keys(rec).length) cfg[id]=rec; else delete cfg[id];
+  saveCfg(cfg);
+  if(edImgState.changed){ if(edImgState.data){ IMAGES[id]=edImgState.data; idbPutImg(id,edImgState.data); } else { delete IMAGES[id]; idbDelImg(id); } }
+  buildList(); renderAll(); if(!$("#viewGarage").hidden) renderGarage(); closeSheet();
+};
+$("#edDelete").onclick=()=>{
+  if(editId===null) return;
+  if(!confirm("Remove this car from the tracker?")) return;
+  const cu=loadCustom(); const i=cu.add.findIndex(z=>z.id===editId);
+  if(i>=0) cu.add.splice(i,1); else if(!cu.del.includes(editId)) cu.del.push(editId);
+  owned.delete(editId); done.delete(editId); saveOwned(); saveDone();
+  const cfg=loadCfg(); delete cfg[editId]; saveCfg(cfg);
+  delete IMAGES[editId]; idbDelImg(editId);
+  saveCustom(cu); buildList(); renderAll(); if(!$("#viewGarage").hidden) renderGarage(); closeSheet();
+};
+
+// ---- flags manager ----
+let flEditKey=null;
+function openFL(){ flShowList(); $("#flScrim").classList.add("open"); $("#flSheet").classList.add("open"); }
+function closeFL(){ $("#flScrim").classList.remove("open"); $("#flSheet").classList.remove("open"); }
+$("#flScrim").onclick=closeFL; $("#edFlagsManage").onclick=openFL;
+function flShowList(){
+  $("#flListView").style.display="block"; $("#flEditView").style.display="none";
+  $("#flItems").innerHTML=loadFlags().map(f=>`<div class="perkitem" data-k="${f.key}"><span class="rdot" style="background:${f.color}"></span><span class="pn"><b>${f.label}</b></span><span style="color:var(--muted)">✎</span></div>`).join("");
+  $("#flItems").querySelectorAll(".perkitem").forEach(el=>el.onclick=()=>flEdit(el.dataset.k));
+}
+function flPrevUpdate(){ const col=$("#flColor").value, el=$("#flPrev"); el.style.background=col+"22"; el.style.color=col; el.style.border="1px solid "+col+"55"; el.textContent=$("#flLabel").value||"Preview"; }
+function flEdit(key){ flEditKey=key; const f=key?flagBy(key):null;
+  $("#flEditTitle").textContent=key?"Edit flag":"Add flag";
+  $("#flLabel").value=f?f.label:""; $("#flColor").value=f?f.color:"#7c5cff"; flPrevUpdate();
+  $("#flDel").style.display=key?"flex":"none";
+  $("#flListView").style.display="none"; $("#flEditView").style.display="block";
+}
+$("#flColor").oninput=flPrevUpdate; $("#flLabel").oninput=flPrevUpdate;
+$("#flAdd").onclick=()=>flEdit(null); $("#flBack").onclick=flShowList;
+$("#flSave").onclick=()=>{ const label=$("#flLabel").value.trim(); if(!label){alert("Give the flag a label.");return;} const color=$("#flColor").value; const flags=loadFlags();
+  if(flEditKey){ const f=flags.find(x=>x.key===flEditKey); if(f){f.label=label;f.color=color;} }
+  else { flags.push({key:"f"+Date.now().toString(36),label,color}); }
+  saveFlags(flags); flShowList(); buildFlagChecks(selectedFlags()); renderAll(); if(!$("#viewGarage").hidden)renderGarage();
+};
+$("#flDel").onclick=()=>{ if(!flEditKey)return; if(!confirm("Delete this flag?"))return; saveFlags(loadFlags().filter(f=>f.key!==flEditKey)); flShowList(); buildFlagChecks(selectedFlags()); renderAll(); };
 
 $("#syncOwned").onclick=()=>{
   if(!PRESET_OWNED.length && !PRESET_PHOTO.length){ alert("No screenshot data is built in yet."); return; }
@@ -473,8 +857,9 @@ let ioMode="export";
 $("#doExport").onclick=()=>{
   ioMode="export";
   $("#ioTitle").textContent="Export backup";
-  $("#ioDesc").textContent="Copy this text and save it somewhere safe (Notes, email). It backs up both owned and photographed. Paste it back later to restore.";
-  $("#ioBox").value=JSON.stringify({photo:[...done],owned:[...owned]});
+  $("#ioDesc").textContent="Copy this text and save it somewhere safe (Notes, email). It backs up everything — progress, custom cars, config, perks, trees and images. Paste it back later to restore.";
+  $("#ioBox").value="Gathering data…";
+  idbAllImgs(images=>{ $("#ioBox").value=JSON.stringify({photo:[...done],owned:[...owned],custom:loadCustom(),perks:loadPerks(),trees:loadTrees(),cfg:loadCfg(),flags:loadFlags(),images}); });
   $("#ioGo").textContent="Copy";
   showIO();
 };
@@ -503,6 +888,12 @@ $("#ioGo").onclick=()=>{
         done=new Set(data.photo||[]);
         owned=new Set(data.owned||[]);
       } else throw 0;
+      if(data && data.custom){ saveCustom({add:data.custom.add||[], edit:data.custom.edit||{}, del:data.custom.del||[]}); buildList(); }
+      if(data && data.perks){ savePerks(data.perks); }
+      if(data && data.trees){ saveTrees(data.trees); }
+      if(data && data.cfg){ saveCfg(data.cfg); }
+      if(data && data.flags){ saveFlags(data.flags); }
+      if(data && data.images){ IMAGES=data.images; Object.keys(data.images).forEach(id=>idbPutImg(id,data.images[id])); }
       saveDone(); saveOwned();
       renderAll(); closeSheet();
     }catch(e){ alert("That doesn't look like a valid backup."); }
@@ -514,8 +905,234 @@ $("#doReset").onclick=()=>{
   }
 };
 
-function renderAll(){ renderChips(); renderFchips(); renderProgress(); renderList(); }
+function renderAll(){ renderChips(); renderFchips(); renderGchips(); renderProgress(); renderList(); }
+
+/* ============================ MASTERY ============================ */
+const PERKS_KEY="fh6_perks_v1", TREES_KEY="fh6_trees_v1";
+const PERK_SEED=[
+  {key:"xp",name:"Instant XP",desc:"",icon:"⭐",hasVar:true,varLabel:"XP",vars:["5000","10000"]},
+  {key:"credits",name:"Credits",desc:"",icon:"💰",hasVar:true,varLabel:"Credits",vars:[]},
+  {key:"wheelspin",name:"Wheelspin",desc:"",icon:"🎡"},
+  {key:"superws",name:"Super Wheelspin",desc:"",icon:"🎰"},
+  {key:"skillmult",name:"Skill Multiplier",desc:"",icon:"✖️",hasVar:true,varLabel:"Multiplier",vars:["6","7","8","9","10"]},
+  {key:"skillpts",name:"Skill Points",desc:"",icon:"🔧"},
+  {key:"drift",name:"Drift Skill",desc:"",icon:"🌀"},
+  {key:"speed",name:"Speed Skill",desc:"",icon:"⚡"},
+  {key:"wreck",name:"Wreckage Skill",desc:"",icon:"💥"},
+  {key:"second_life",name:"Second Life",desc:"Skill chains survive extra crashes. Always bottom-right, 25 pts.",icon:"😇"},
+];
+function loadPerks(){ try{ const p=JSON.parse(localStorage.getItem(PERKS_KEY)); return Array.isArray(p)&&p.length?p:PERK_SEED.slice(); }catch(e){ return PERK_SEED.slice(); } }
+function savePerks(p){ try{ localStorage.setItem(PERKS_KEY, JSON.stringify(p)); }catch(e){} }
+function perkBy(k){ return loadPerks().find(p=>p.key===k); }
+function loadTrees(){ try{ return JSON.parse(localStorage.getItem(TREES_KEY))||{}; }catch(e){ return {}; } }
+function saveTrees(t){ try{ localStorage.setItem(TREES_KEY, JSON.stringify(t)); }catch(e){} }
+function getTree(id){ const t=loadTrees()[id]; return t? {cells:t.cells||{},vals:t.vals||{}} : {cells:{},vals:{}}; }
+function putTree(id,tree){ const all=loadTrees(); all[id]=tree; saveTrees(all); }
+
+function perkIcon(p,big){
+  if(!p) return '<span class="'+(big?'pic':'emoji')+'">❔</span>';
+  if(/^data:|^https?:/.test(p.icon||"")) return '<img src="'+p.icon+'" alt="">';
+  return '<span class="'+(big?'pic':'emoji')+'">'+(p.icon||"❔")+'</span>';
+}
+const ROW_COST=[10,5,3,1]; // by visual row: top(0)=10, then 5, 3, bottom(3)=1
+function nodeCost(pos){ return pos===15 ? 25 : ROW_COST[Math.floor(pos/4)]; }
+// Start is always the bottom-left-most filled node.
+function startPos(tree){
+  let best=null;
+  for(let pos=0;pos<16;pos++){ if(tree.cells[pos]==null) continue; const r=Math.floor(pos/4),c=pos%4;
+    if(best==null || r>best.r || (r===best.r && c<best.c)) best={pos,r,c}; }
+  return best? best.pos : null;
+}
+function ekey(a,b){ return a<b? a+"_"+b : b+"_"+a; }
+function neighbors(pos){ const r=Math.floor(pos/4),c=pos%4,o=[]; if(c>0)o.push(pos-1); if(c<3)o.push(pos+1); if(r>0)o.push(pos-4); if(r<3)o.push(pos+4); return o; }
+function cheapestPath(tree,target){
+  if(tree.cells[target]==null) return null;
+  const filled=p=>tree.cells[p]!=null;
+  const adj={}; for(let p=0;p<16;p++){ if(filled(p)) adj[p]=neighbors(p).filter(filled); } // auto: adjacent filled cells are connected
+  const sp=startPos(tree); const entries = sp!=null ? [sp] : [];
+  const dist={},prev={},seen={}; const pq=[];
+  entries.forEach(e=>{ dist[e]=nodeCost(e); pq.push(e); });
+  while(pq.length){
+    pq.sort((a,b)=>dist[a]-dist[b]); const u=pq.shift();
+    if(seen[u])continue; seen[u]=1;
+    (adj[u]||[]).forEach(v=>{ const nd=dist[u]+nodeCost(v); if(dist[v]==null||nd<dist[v]){ dist[v]=nd; prev[v]=u; pq.push(v); } });
+  }
+  if(dist[target]==null) return null;
+  const path=[]; let c=target; while(c!=null){ path.unshift(c); c=(c in prev)?prev[c]:null; }
+  return {cost:dist[target], path};
+}
+
+// --- tab switching ---
+function switchTab(t){
+  document.querySelectorAll(".tabbar button").forEach(x=>x.classList.toggle("active",x.dataset.tab===t));
+  $("#viewTracker").hidden=t!=="tracker"; $("#viewGarage").hidden=t!=="garage"; $("#viewMastery").hidden=t!=="mastery";
+  if(t==="mastery") renderMList();
+  if(t==="garage") renderGarage();
+}
+document.querySelectorAll(".tabbar button").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+
+// --- garage list ---
+let gquery="";
+const gSearch=$("#gsearch");
+gSearch.addEventListener("input",()=>{ gquery=gSearch.value.trim().toLowerCase(); $("#gclr").style.display=gquery?"block":"none"; renderGarage(); });
+$("#gclr").onclick=()=>{ gSearch.value=""; gquery=""; $("#gclr").style.display="none"; renderGarage(); };
+$("#gAdd").onclick=()=>openAdd();
+function renderGarage(){
+  const cars = (gquery ? LIST.filter(c=>((carCfg(c.id).name||"")+" "+c[1]+" "+c[2]+" "+c[0]).toLowerCase().includes(gquery)) : LIST.slice())
+    .sort((a,b)=>a[1].localeCompare(b[1])||a[0]-b[0]);
+  $("#glist").innerHTML = cars.map(c=>{
+    const cf=carCfg(c.id), rc=cf.rarity?rarityBy(cf.rarity):null;
+    const img=IMAGES[c.id]?`<img class="rthumb" src="${IMAGES[c.id]}">`:`<span class="rthumb"></span>`;
+    const dot=rc?`<span class="rdot" style="background:${rc.color}"></span> `:"";
+    const nm=cf.name||`${c[1]} ${c[2]}`;
+    const price=cf.price>0?`<span class="gprice">${fmtCr(cf.price)}<small>${fmtCr(Math.round(cf.price*0.95))} −5%</small></span>`:"";
+    return `<div class="grow" data-id="${c.id}">${img}<div style="flex:1;min-width:0"><div class="gnm">${dot}${nm}</div><div class="gsub">${c[0]} · Class ${c[3]} · ${countryOf(c)}</div></div>${price}</div>`;
+  }).join("") || `<div class="empty">No cars match.</div>`;
+  $("#glist").querySelectorAll(".grow").forEach(el=>el.onclick=()=>openEdit(el.dataset.id));
+}
+
+// --- mastery car list ---
+let mquery="", masteryCar=null, editMode=false, curTarget=null, pickPos=null;
+const mSearch=$("#msearch");
+mSearch.addEventListener("input",()=>{ mquery=mSearch.value.trim().toLowerCase(); $("#mclr").style.display=mquery?"block":"none"; renderMList(); });
+$("#mclr").onclick=()=>{ mSearch.value=""; mquery=""; $("#mclr").style.display="none"; renderMList(); };
+function renderMList(){
+  $("#treewrap").hidden=true; $("#mlist").style.display="block"; $("#mSearchWrap").style.display="block"; $("#mTitle").textContent="🌳 Car Mastery";
+  const trees=loadTrees();
+  let cars = mquery ? LIST.filter(c=>(c[1]+" "+c[2]+" "+c[0]).toLowerCase().includes(mquery)).slice(0,150)
+                    : LIST.filter(c=>owned.has(c.id)||trees[c.id]);
+  cars.sort((a,b)=> (owned.has(a.id)?0:1)-(owned.has(b.id)?0:1) || a[1].localeCompare(b[1]) || a[0]-b[0]);
+  $("#mlist").innerHTML = cars.length ? cars.map(c=>{
+    const has=!!trees[c.id];
+    return `<div class="mrow" data-id="${c.id}"><div style="flex:1;min-width:0"><div class="mnm">${c[1]} ${c[2]}</div><div class="msub">${c[0]} · Class ${c[3]}${owned.has(c.id)?" · 🔑 owned":""}</div></div><span class="mtag ${has?'has':'no'}">${has?"tree ✓":"no tree"}</span></div>`;
+  }).join("") : `<div class="empty">${mquery?"No cars match.":"Your owned cars (and any with a tree) show here. Search to find any car."}</div>`;
+  $("#mlist").querySelectorAll(".mrow").forEach(el=>el.onclick=()=>openCarTree(el.dataset.id));
+}
+function openCarTree(id){
+  masteryCar=id; curTarget=null; editMode=false;
+  $("#mlist").style.display="none"; $("#mSearchWrap").style.display="none"; $("#treewrap").hidden=false;
+  const c=LIST.find(x=>x.id===id); $("#mTitle").textContent = c?`${c[1]} ${c[2]}`:"Tree";
+  renderTree();
+}
+const CX=p=>(p%4)*26.333+10.5, CY=p=>Math.floor(p/4)*26.333+10.5;
+function renderTree(){
+  const tree=getTree(masteryCar);
+  let pathSet=new Set(), pathEdges=new Set(), info;
+  if(curTarget!=null){
+    const r=cheapestPath(tree,curTarget);
+    if(r){ pathSet=new Set(r.path); for(let i=0;i<r.path.length-1;i++) pathEdges.add(ekey(r.path[i],r.path[i+1])); const p=perkBy(tree.cells[curTarget]);
+      info=`<div class="treeinfo"><h4>${p?p.name:"Perk"}${tree.vals[curTarget]!=null?` — ${tree.vals[curTarget]}`:""}</h4><div class="pts">Cheapest path: <b>${r.cost} pts</b> · ${r.path.length} perk${r.path.length>1?"s":""}${p&&p.desc?"<br>"+p.desc:""}</div></div>`;
+    } else info=`<div class="treeinfo"><div class="pts">No connected path to that perk yet — link it up in Edit mode.</div></div>`;
+  } else {
+    info=`<div class="treeinfo"><div class="pts">${editMode?"Tap a cell to set or clear its perk. Connections to neighbours are automatic. Start = bottom-left (green ring).":"Tap a perk to see the cheapest point path from the bottom-left start."}</div></div>`;
+  }
+  // grid cells
+  let cells="";
+  for(let pos=0;pos<16;pos++){
+    const key=tree.cells[pos], p=key?perkBy(key):null, val=tree.vals[pos];
+    let cls="gcell"+(p?"":" empty")+(pathSet.has(pos)?" on":"")+(pos===curTarget?" tgt":"")+(startPos(tree)===pos?" start":"");
+    const inner = p ? perkIcon(p)+(val!=null?`<span class="val">${val}</span>`:"")+`<span class="cost">${nodeCost(pos)}</span>` : (editMode?'<span class="emoji" style="color:var(--muted)">＋</span>':"");
+    cells+=`<div class="${cls}" style="left:${CX(pos)-10.5}%;top:${CY(pos)-10.5}%" data-pos="${pos}">${inner}</div>`;
+  }
+  // edges are automatic: any two orthogonally-adjacent filled cells are connected
+  let lines="";
+  const has=p=>tree.cells[p]!=null;
+  for(let pos=0;pos<16;pos++){ if(!has(pos))continue; const col=pos%4,row=Math.floor(pos/4);
+    if(col<3 && has(pos+1)){ const lit=pathEdges.has(ekey(pos,pos+1)); lines+=`<line class="edgeline${lit?" lit":""}" x1="${CX(pos)}" y1="${CY(pos)}" x2="${CX(pos+1)}" y2="${CY(pos+1)}"/>`; }
+    if(row<3 && has(pos+4)){ const lit=pathEdges.has(ekey(pos,pos+4)); lines+=`<line class="edgeline${lit?" lit":""}" x1="${CX(pos)}" y1="${CY(pos)}" x2="${CX(pos+4)}" y2="${CY(pos+4)}"/>`; }
+  }
+  $("#treewrap").innerHTML =
+    `<div class="toolbar"><button class="backbtn" id="treeBack">← Cars</button><button class="backbtn" id="editToggle">${editMode?"✓ Done editing":"✏️ Edit tree"}</button></div>`+
+    `<div class="grid">${cells}<svg class="edges" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg></div>`+
+    info;
+  $("#treeBack").onclick=renderMList;
+  $("#editToggle").onclick=()=>{ editMode=!editMode; curTarget=null; renderTree(); };
+  $("#treewrap").querySelectorAll(".gcell").forEach(el=>el.onclick=()=>cellTap(+el.dataset.pos));
+}
+function cellTap(pos){
+  const tree=getTree(masteryCar);
+  if(editMode){ openPicker(pos); return; }
+  if(tree.cells[pos]==null) return;          // viewer: only filled cells are targets
+  curTarget = (curTarget===pos)? null : pos;
+  renderTree();
+}
+// --- perk picker (assign to a cell, optionally with a value) ---
+let pickKey=null;
+function openPicker(pos){
+  pickPos=pos; const perks=loadPerks();
+  $("#pkChoose").style.display="block"; $("#pkValView").style.display="none";
+  $("#pkTitle").textContent="Cell "+(pos+1)+" — choose perk";
+  $("#pkGrid").innerHTML = perks.map(p=>`<div class="perkopt" data-k="${p.key}">${perkIcon(p,true)}${p.name}</div>`).join("");
+  $("#pkGrid").querySelectorAll(".perkopt").forEach(el=>el.onclick=()=>choosePerk(el.dataset.k));
+  $("#pkScrim").classList.add("open"); $("#pkSheet").classList.add("open");
+}
+function choosePerk(key){
+  const p=perkBy(key);
+  if(p && p.hasVar){ pickKey=key; showValStep(p); }
+  else { assignPerk(pickPos,key,null); closePk(); }
+}
+function showValStep(p){
+  const tree=getTree(masteryCar);
+  $("#pkValTitle").textContent=p.name;
+  $("#pkValLabel").textContent=(p.varLabel||"Value")+":";
+  $("#pkValInput").value = (tree.vals[pickPos]!=null)?tree.vals[pickPos]:"";
+  const vals=p.vars||[];
+  $("#pkValList").innerHTML=vals.map(v=>`<option value="${v}">`).join("");
+  $("#pkValChips").innerHTML=vals.map(v=>`<button class="chip" data-v="${v}">${v}</button>`).join("");
+  $("#pkValChips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ $("#pkValInput").value=b.dataset.v; });
+  $("#pkChoose").style.display="none"; $("#pkValView").style.display="block";
+}
+$("#pkValBack").onclick=()=>{ $("#pkChoose").style.display="block"; $("#pkValView").style.display="none"; };
+$("#pkValSave").onclick=()=>{
+  const v=$("#pkValInput").value.trim();
+  assignPerk(pickPos, pickKey, v||null);
+  if(v){ const perks=loadPerks(), p=perks.find(x=>x.key===pickKey); if(p){ p.vars=p.vars||[]; if(!p.vars.map(String).includes(v)){ p.vars.push(v); savePerks(perks); } } }
+  closePk();
+};
+function closePk(){ $("#pkScrim").classList.remove("open"); $("#pkSheet").classList.remove("open"); }
+$("#pkScrim").onclick=closePk;
+function assignPerk(pos,key,val){ const t=getTree(masteryCar); t.cells[pos]=key; if(val!=null&&val!=="") t.vals[pos]=val; else delete t.vals[pos]; putTree(masteryCar,t); renderTree(); }
+$("#pkClear").onclick=()=>{ const t=getTree(masteryCar); delete t.cells[pickPos]; delete t.vals[pickPos]; putTree(masteryCar,t); closePk(); renderTree(); };
+
+// --- perks catalog ---
+let pcEditKey=null;
+function openPC(){ pcShowList(); $("#pcScrim").classList.add("open"); $("#pcSheet").classList.add("open"); }
+function closePC(){ $("#pcScrim").classList.remove("open"); $("#pcSheet").classList.remove("open"); }
+$("#perksBtn").onclick=openPC; $("#pcScrim").onclick=closePC;
+function pcShowList(){
+  $("#pcListView").style.display="block"; $("#pcEditView").style.display="none";
+  const perks=loadPerks();
+  $("#pcItems").innerHTML = perks.map(p=>`<div class="perkitem" data-k="${p.key}">${perkIcon(p,true)}<span class="pn"><b>${p.name}</b><small>${p.desc||"—"}</small></span><span style="color:var(--muted)">✎</span></div>`).join("");
+  $("#pcItems").querySelectorAll(".perkitem").forEach(el=>el.onclick=()=>pcEdit(el.dataset.k));
+}
+function pcEdit(key){
+  pcEditKey=key; const p=key?perkBy(key):null;
+  $("#pcEditTitle").textContent = key?"Edit perk":"Add perk";
+  $("#pcName").value=p?p.name:""; $("#pcDesc").value=p?p.desc||"":""; $("#pcIcon").value=(p&&!/^data:|^https?:/.test(p.icon||""))?p.icon:""; $("#pcImg").value="";
+  $("#pcHasVar").checked=!!(p&&p.hasVar); $("#pcVarLabel").value=(p&&p.varLabel)||""; $("#pcVars").value=(p&&p.vars)?p.vars.join(", "):"";
+  $("#pcDel").style.display = key?"flex":"none";
+  $("#pcListView").style.display="none"; $("#pcEditView").style.display="block";
+}
+$("#pcAdd").onclick=()=>pcEdit(null);
+$("#pcBack").onclick=pcShowList;
+let pcImgData=null;
+$("#pcImg").onchange=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{ pcImgData=r.result; }; r.readAsDataURL(f); };
+$("#pcSave").onclick=()=>{
+  const name=$("#pcName").value.trim(); if(!name){ alert("Give the perk a name."); return; }
+  const perks=loadPerks();
+  const icon = pcImgData || $("#pcIcon").value.trim() || "❔";
+  const hasVar=$("#pcHasVar").checked, varLabel=$("#pcVarLabel").value.trim();
+  const vars=$("#pcVars").value.split(",").map(s=>s.trim()).filter(Boolean);
+  if(pcEditKey){ const p=perks.find(x=>x.key===pcEditKey); if(p){ p.name=name; p.desc=$("#pcDesc").value.trim(); p.icon=icon; p.hasVar=hasVar; p.varLabel=varLabel; p.vars=vars; } }
+  else { const key="p"+Date.now().toString(36); perks.push({key,name,desc:$("#pcDesc").value.trim(),icon,hasVar,varLabel,vars}); }
+  pcImgData=null; savePerks(perks); pcShowList(); if(!$("#treewrap").hidden) renderTree();
+};
+$("#pcDel").onclick=()=>{ if(!pcEditKey)return; if(!confirm("Delete this perk type?"))return; savePerks(loadPerks().filter(p=>p.key!==pcEditKey)); pcImgData=null; pcShowList(); };
+/* ========================== /MASTERY ========================== */
+
+buildList();
 renderAll();
+idbOpen(()=>{ idbAllImgs(m=>{ IMAGES=m; renderAll(); if(!$("#viewGarage").hidden) renderGarage(); }); });
 </script>
 </body>
 </html>

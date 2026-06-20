@@ -1,0 +1,6 @@
+# keep this GitHub Pages repo to just the app
+/promo/
+/index_v1.html
+/fh6-promo-tracker.html
+.DS_Store
+Thumbs.db
