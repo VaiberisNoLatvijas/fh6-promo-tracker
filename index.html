@@ -120,9 +120,12 @@
   .mtag.no{background:var(--chip);color:var(--muted);border:1px solid var(--line);}
   .treewrap{padding:12px;}
   .backbtn{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer;}
-  .grid{position:relative;width:100%;max-width:380px;margin:14px auto;aspect-ratio:1;}
+  .gwrap{position:relative;width:100%;max-width:380px;margin:14px auto;}
+  .gwrap::before{content:"";display:block;padding-bottom:100%;}   /* force a perfect square box */
+  .grid{position:absolute;inset:0;}
   .gcell{position:absolute;width:21%;height:21%;border-radius:14%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--panel2);border:2px solid var(--line);overflow:hidden;}
-  .gcell.empty{background:transparent;border:2px dashed #2c3547;}
+  .gcell.empty{background:transparent;border:2px solid transparent;}        /* invisible in view mode */
+  .grid.edit .gcell.empty{border:2px dashed #2c3547;}                       /* dashed only while editing */
   .gcell.on{background:var(--accent);border-color:var(--accent);}      /* purchased/in-path */
   .gcell.tgt{box-shadow:0 0 0 3px var(--good);}
   .gcell.start{border-color:var(--good);}
@@ -227,7 +230,7 @@
     .tabbar{max-width:760px;left:50%;transform:translateX(-50%);border-left:1px solid var(--line);border-right:1px solid var(--line);border-top-left-radius:14px;border-top-right-radius:14px;}
     .sheet{left:50%;right:auto;top:50%;bottom:auto;width:520px;max-width:calc(100vw - 32px);max-height:85vh;border-radius:18px;transform:translate(-50%,150vh);}
     .sheet.open{transform:translate(-50%,-50%);}
-    .grid{max-width:440px;}
+    .gwrap{max-width:440px;}
     .row,.grow,.mrow{transition:background .1s;}
     .row:hover,.grow:hover,.mrow:hover,.perkitem:hover{background:var(--panel2);}
     .chip,.fchip,.own,.edit,.menu-btn,.backbtn,.tab{cursor:pointer;}
@@ -1090,10 +1093,12 @@ function renderTree(){
     if(col<3 && has(pos+1)){ const lit=pathEdges.has(ekey(pos,pos+1)); lines+=`<line class="edgeline${lit?" lit":""}" x1="${CX(pos)}" y1="${CY(pos)}" x2="${CX(pos+1)}" y2="${CY(pos+1)}"/>`; }
     if(row<3 && has(pos+4)){ const lit=pathEdges.has(ekey(pos,pos+4)); lines+=`<line class="edgeline${lit?" lit":""}" x1="${CX(pos)}" y1="${CY(pos)}" x2="${CX(pos+4)}" y2="${CY(pos+4)}"/>`; }
   }
-  $("#treewrap").innerHTML =
-    `<div class="toolbar"><button class="backbtn" id="treeBack">← Cars</button><button class="backbtn" id="editToggle">${editMode?"✓ Done editing":"✏️ Edit tree"}</button></div>`+
-    `<div class="grid">${cells}<svg class="edges" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg></div>`+
-    info;
+  const filled=Object.keys(tree.cells).length;
+  const toolbar=`<div class="toolbar"><button class="backbtn" id="treeBack">← Cars</button><button class="backbtn" id="editToggle">${editMode?"Done editing":"Edit tree"}</button></div>`;
+  const gridHtml=`<div class="gwrap"><div class="grid${editMode?" edit":""}">${cells}<svg class="edges" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg></div></div>`;
+  $("#treewrap").innerHTML = (editMode||filled>0)
+    ? toolbar + gridHtml + info
+    : toolbar + `<div class="treeinfo"><div class="pts">No mastery tree for this car yet. Tap “Edit tree” to add perks.</div></div>`;
   $("#treeBack").onclick=renderMList;
   $("#editToggle").onclick=()=>{ editMode=!editMode; curTarget=null; renderTree(); };
   $("#treewrap").querySelectorAll(".gcell").forEach(el=>el.onclick=()=>cellTap(+el.dataset.pos));
