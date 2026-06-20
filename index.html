@@ -192,6 +192,7 @@
     position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateY(100%);transition:transform .25s ease;
     background:var(--panel);border-top-left-radius:20px;border-top-right-radius:20px;
     border-top:1px solid var(--line);padding:8px 16px calc(20px + env(safe-area-inset-bottom));
+    max-height:88vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
   }
   .sheet.open{transform:translateY(0);}
   .grab{width:42px;height:5px;border-radius:99px;background:var(--line);margin:8px auto 14px;}
@@ -217,8 +218,8 @@
     #viewTracker,#viewGarage,#viewMastery{max-width:760px;margin:0 auto;min-height:100vh;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);}
     header,.mhead{margin:0 auto;}
     .tabbar{max-width:760px;left:50%;transform:translateX(-50%);border-left:1px solid var(--line);border-right:1px solid var(--line);border-top-left-radius:14px;border-top-right-radius:14px;}
-    .sheet{left:50%;right:auto;width:520px;max-width:calc(100vw - 32px);transform:translate(-50%,130%);border-radius:18px;bottom:84px;}
-    .sheet.open{transform:translate(-50%,0);}
+    .sheet{left:50%;right:auto;top:50%;bottom:auto;width:520px;max-width:calc(100vw - 32px);max-height:85vh;border-radius:18px;transform:translate(-50%,150vh);}
+    .sheet.open{transform:translate(-50%,-50%);}
     .grid{max-width:440px;}
     .row,.grow,.mrow{transition:background .1s;}
     .row:hover,.grow:hover,.mrow:hover,.perkitem:hover{background:var(--panel2);}
