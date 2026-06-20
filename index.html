@@ -5,13 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0b0d12">
+<meta name="theme-color" content="#0d1117">
+<script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("fh6_theme_v1")||"dark");}catch(e){}</script>
 <title>FH6 Horizon Promo Tracker</title>
 <style>
-  :root{
-    --bg:#0b0d12; --panel:#141823; --panel2:#1c2230; --line:#2a3242;
-    --txt:#e8ecf4; --muted:#8b95a8; --accent:#7c5cff; --good:#36d399;
-    --chip:#222a3a;
+  /* ---- Sumi Night (dark, default): ink + ai-indigo + matcha ---- */
+  :root, :root[data-theme="dark"]{
+    --bg:#0d1117; --panel:#161c27; --panel2:#1f2734; --line:#2b3441;
+    --txt:#eef2f8; --muted:#8b95a8; --accent:#5b7cfa; --good:#4cc38a;
+    --chip:#222b3a; --blur:rgba(13,17,23,.92); --frame:#070a0e;
+  }
+  /* ---- Washi (light): paper cream + sumi ink + ai-indigo + vermillion ---- */
+  :root[data-theme="light"]{
+    --bg:#f4efe4; --panel:#fbf8f1; --panel2:#ece4d4; --line:#dcd1bd;
+    --txt:#241f1a; --muted:#7c7264; --accent:#324db3; --good:#2f9e6b;
+    --chip:#e7ddcc; --blur:rgba(248,244,236,.9); --frame:#e6ddcc;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
@@ -23,7 +31,7 @@
   }
   header{
     position:sticky; top:0; z-index:20;
-    background:rgba(11,13,18,.92); backdrop-filter:blur(10px);
+    background:var(--blur); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
     padding:calc(10px + env(safe-area-inset-top)) 12px 8px;
   }
@@ -96,13 +104,13 @@
   .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:.3px;}
   .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px;font-size:16px;outline:none;}
   /* ---- tab bar ---- */
-  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:rgba(11,13,18,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--blur);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
   .tabbar button{flex:1;background:none;border:none;color:var(--muted);font-size:11px;font-weight:600;padding:8px 0 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;}
   .tabbar button .ti{font-size:19px;line-height:1;}
   .tabbar button.active{color:var(--accent);}
   body{padding-bottom:calc(58px + env(safe-area-inset-bottom));}
   /* ---- mastery ---- */
-  .mhead{position:sticky;top:0;z-index:20;background:rgba(11,13,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 12px 10px;}
+  .mhead{position:sticky;top:0;z-index:20;background:var(--blur);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 12px 10px;}
   #mlist{padding:6px 10px 20px;}
   .mrow{display:flex;align-items:center;gap:10px;padding:13px;border-top:1px solid var(--line);cursor:pointer;}
   .mrow:active{background:var(--panel2);}
@@ -214,7 +222,7 @@
   .row-btns .act{margin-bottom:0;justify-content:center;}
   /* ---- desktop / wide screens: center the app in a phone-width column ---- */
   @media (min-width:700px){
-    body{background:#070809;}
+    body{background:var(--frame);}
     #viewTracker,#viewGarage,#viewMastery{max-width:760px;margin:0 auto;min-height:100vh;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line);}
     header,.mhead{margin:0 auto;}
     .tabbar{max-width:760px;left:50%;transform:translateX(-50%);border-left:1px solid var(--line);border-right:1px solid var(--line);border-top-left-radius:14px;border-top-right-radius:14px;}
@@ -286,6 +294,7 @@
   <div id="sheetMain">
     <h3>Menu</h3>
     <p>Your progress is saved automatically in this browser. Use the filter chips up top to show only owned / not-owned / photographed / not-photographed cars.</p>
+    <button class="act" id="themeBtn"><span class="ico">🌗</span><span>Theme<small id="themeState">Sumi Night (dark)</small></span></button>
     <button class="act" id="hideFE"><span class="ico">✨</span><span>Hide special editions<small id="feState">Currently showing Forza Editions etc.</small></span></button>
     <button class="act" id="syncOwned"><span class="ico">🔄</span><span>Sync from my screenshots<small id="syncState">Apply latest owned + photographed</small></span></button>
     <button class="act" id="doExport"><span class="ico">⬆️</span><span>Export backup<small>Copy owned + photographed as text</small></span></button>
@@ -1130,6 +1139,17 @@ $("#pcSave").onclick=()=>{
 };
 $("#pcDel").onclick=()=>{ if(!pcEditKey)return; if(!confirm("Delete this perk type?"))return; savePerks(loadPerks().filter(p=>p.key!==pcEditKey)); pcImgData=null; pcShowList(); };
 /* ========================== /MASTERY ========================== */
+
+// ---- theme (Sumi Night / Washi) ----
+const THEME_KEY="fh6_theme_v1";
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", t==="light"?"#f4efe4":"#0d1117");
+  const st=$("#themeState"); if(st) st.textContent = t==="light"?"Washi (light)":"Sumi Night (dark)";
+}
+let theme; try{ theme=localStorage.getItem(THEME_KEY)||"dark"; }catch(e){ theme="dark"; }
+applyTheme(theme);
+$("#themeBtn").onclick=()=>{ theme = theme==="light"?"dark":"light"; try{ localStorage.setItem(THEME_KEY,theme); }catch(e){} applyTheme(theme); };
 
 buildList();
 renderAll();
