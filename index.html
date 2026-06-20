@@ -338,6 +338,7 @@
     <h3 id="pkTitle">Choose a perk</h3>
     <div class="perkpick" id="pkGrid"></div>
     <div class="row-btns" style="margin-top:12px;">
+      <button class="act" id="pkClose" style="justify-content:center;">Close</button>
       <button class="act danger" id="pkClear" style="justify-content:center;">Clear cell</button>
     </div>
   </div>
@@ -357,6 +358,7 @@
     <p>Define perk types once (icon, name, description) — reused across all cars. Add your own square icons here.</p>
     <div class="perklist" id="pcItems"></div>
     <button class="act" id="pcAdd" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">➕ Add perk</button>
+    <button class="act" id="pcClose" style="justify-content:center;">Done</button>
   </div>
   <div id="pcEditView" style="display:none;">
     <h3 id="pcEditTitle">Edit perk</h3>
@@ -379,6 +381,7 @@
     <p>Special categories you can tag cars with. Add your own, rename, or recolour.</p>
     <div id="flItems"></div>
     <button class="act" id="flAdd" style="background:var(--accent);border-color:var(--accent);color:#fff;justify-content:center;">➕ Add flag</button>
+    <button class="act" id="flClose" style="justify-content:center;">Done</button>
   </div>
   <div id="flEditView" style="display:none;">
     <h3 id="flEditTitle">Edit flag</h3>
@@ -828,7 +831,7 @@ $("#edDelete").onclick=()=>{
 let flEditKey=null;
 function openFL(){ flShowList(); $("#flScrim").classList.add("open"); $("#flSheet").classList.add("open"); }
 function closeFL(){ $("#flScrim").classList.remove("open"); $("#flSheet").classList.remove("open"); }
-$("#flScrim").onclick=closeFL; $("#edFlagsManage").onclick=openFL;
+$("#flScrim").onclick=closeFL; $("#edFlagsManage").onclick=openFL; $("#flClose").onclick=closeFL;
 function flShowList(){
   $("#flListView").style.display="block"; $("#flEditView").style.display="none";
   $("#flItems").innerHTML=loadFlags().map(f=>`<div class="perkitem" data-k="${f.key}"><span class="rdot" style="background:${f.color}"></span><span class="pn"><b>${f.label}</b></span><span style="color:var(--muted)">✎</span></div>`).join("");
@@ -1100,7 +1103,7 @@ $("#pkValSave").onclick=()=>{
   closePk();
 };
 function closePk(){ $("#pkScrim").classList.remove("open"); $("#pkSheet").classList.remove("open"); }
-$("#pkScrim").onclick=closePk;
+$("#pkScrim").onclick=closePk; $("#pkClose").onclick=closePk;
 function assignPerk(pos,key,val){ const t=getTree(masteryCar); t.cells[pos]=key; if(val!=null&&val!=="") t.vals[pos]=val; else delete t.vals[pos]; putTree(masteryCar,t); renderTree(); }
 $("#pkClear").onclick=()=>{ const t=getTree(masteryCar); delete t.cells[pickPos]; delete t.vals[pickPos]; putTree(masteryCar,t); closePk(); renderTree(); };
 
@@ -1108,7 +1111,7 @@ $("#pkClear").onclick=()=>{ const t=getTree(masteryCar); delete t.cells[pickPos]
 let pcEditKey=null;
 function openPC(){ pcShowList(); $("#pcScrim").classList.add("open"); $("#pcSheet").classList.add("open"); }
 function closePC(){ $("#pcScrim").classList.remove("open"); $("#pcSheet").classList.remove("open"); }
-$("#perksBtn").onclick=openPC; $("#pcScrim").onclick=closePC;
+$("#perksBtn").onclick=openPC; $("#pcScrim").onclick=closePC; $("#pcClose").onclick=closePC;
 function pcShowList(){
   $("#pcListView").style.display="block"; $("#pcEditView").style.display="none";
   const perks=loadPerks();
