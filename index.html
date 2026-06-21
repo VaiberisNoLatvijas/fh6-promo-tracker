@@ -139,11 +139,11 @@
   .gcell.tgt{box-shadow:0 0 0 3px var(--good);}
   .gcell.start{border-color:var(--good);}
   .gcell img{width:74%;height:74%;object-fit:contain;border-radius:12%;}
-  .gcell img,.perkopt img,.perkitem img{ filter:blur(.4px); }   /* soften upscaled raster icons */
+  .gcell img,.perkopt img,.perkitem img{ filter:blur(.1px); }   /* soften upscaled raster icons */
   /* light themes: white game icons vanish on light cells -> darken them (except on dark/selected cells) */
   :root[data-mode="light"] .gcell img,
   :root[data-mode="light"] .perkopt img,
-  :root[data-mode="light"] .perkitem img{ filter:invert(1) brightness(.82) blur(.4px); }
+  :root[data-mode="light"] .perkitem img{ filter:invert(1) brightness(.82) blur(.1px); }
   :root[data-mode="light"] .gcell.on img{ filter:blur(.4px); }   /* selected / in-path cells are dark -> keep white */
   .gcell .emoji{font-size:min(7vw,30px);}
   .gcell .cost{position:absolute;bottom:1px;right:3px;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;}
