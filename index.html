@@ -6,21 +6,30 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0d1117">
-<script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("fh6_theme_v1")||"dark");}catch(e){}</script>
+<script>try{var t=localStorage.getItem("fh6_theme_v1")||"sumi";if(t==="dark")t="sumi";if(t==="light")t="washi";var lm=/light$/.test(t)||t==="washi";var r=document.documentElement;r.setAttribute("data-theme",t);r.setAttribute("data-mode",lm?"light":"dark");}catch(e){}</script>
 <title>FH6 Horizon Promo Tracker</title>
 <style>
-  /* ---- Sumi Night (dark, default): ink + ai-indigo + matcha ---- */
-  :root, :root[data-theme="dark"]{
-    --bg:#0d1117; --panel:#161c27; --panel2:#1f2734; --line:#2b3441;
-    --txt:#eef2f8; --muted:#8b95a8; --accent:#5b7cfa; --good:#4cc38a;
-    --chip:#222b3a; --blur:rgba(13,17,23,.92); --frame:#070a0e;
-  }
-  /* ---- Washi (light): paper cream + sumi ink + ai-indigo + vermillion ---- */
-  :root[data-theme="light"]{
-    --bg:#f4efe4; --panel:#fbf8f1; --panel2:#ece4d4; --line:#dcd1bd;
-    --txt:#241f1a; --muted:#7c7264; --accent:#324db3; --good:#2f9e6b;
-    --chip:#e7ddcc; --blur:rgba(248,244,236,.9); --frame:#e6ddcc;
-  }
+  /* ===== THEMES ===== */
+  :root, :root[data-theme="sumi"]{   /* Sumi Night — Japan ink + ai-indigo (default dark) */
+    --bg:#0d1117;--panel:#161c27;--panel2:#1f2734;--line:#2b3441;--txt:#eef2f8;--muted:#8b95a8;--accent:#5b7cfa;--good:#4cc38a;--chip:#222b3a;--blur:rgba(13,17,23,.92);--frame:#070a0e;}
+  :root[data-theme="racing-dark"]{   /* Racing — carbon + red + gold */
+    --bg:#101114;--panel:#191b20;--panel2:#23262d;--line:#33373f;--txt:#f3f4f6;--muted:#9aa1ac;--accent:#e2342b;--good:#f0b429;--chip:#262a31;--blur:rgba(16,17,20,.92);--frame:#070809;}
+  :root[data-theme="sakura-dark"]{   /* Sakura Night — indigo + sakura pink */
+    --bg:#14121c;--panel:#1e1b28;--panel2:#272335;--line:#352f47;--txt:#f3eef6;--muted:#9a90a8;--accent:#ec6d8a;--good:#5cc1a0;--chip:#2a2438;--blur:rgba(20,18,28,.92);--frame:#0c0a12;}
+  :root[data-theme="retro-dark"]{    /* Retro Arcade — synthwave purple + neon */
+    --bg:#160f24;--panel:#211633;--panel2:#2c1f44;--line:#3d2c5c;--txt:#eee6ff;--muted:#a596c4;--accent:#ff4fa6;--good:#34e1d6;--chip:#2f2150;--blur:rgba(22,15,36,.92);--frame:#0c0818;}
+  :root[data-theme="hc-dark"]{       /* High Contrast Dark */
+    --bg:#000000;--panel:#0d0d0d;--panel2:#161616;--line:#5a5a5a;--txt:#ffffff;--muted:#d6d6d6;--accent:#2f9bff;--good:#00e676;--chip:#1a1a1a;--blur:rgba(0,0,0,.94);--frame:#000000;}
+  :root[data-theme="washi"]{         /* Washi — paper cream (default light) */
+    --bg:#f4efe4;--panel:#fbf8f1;--panel2:#ece4d4;--line:#dcd1bd;--txt:#241f1a;--muted:#7c7264;--accent:#324db3;--good:#2f9e6b;--chip:#e7ddcc;--blur:rgba(248,244,236,.9);--frame:#e6ddcc;}
+  :root[data-theme="racing-light"]{  /* Racing Light — silver + red */
+    --bg:#eef0f3;--panel:#ffffff;--panel2:#e3e6ea;--line:#ccd2d9;--txt:#16181c;--muted:#697079;--accent:#d62f27;--good:#1f9e55;--chip:#e1e5ea;--blur:rgba(255,255,255,.9);--frame:#dfe3e8;}
+  :root[data-theme="sakura-light"]{  /* Sakura — pink paper */
+    --bg:#fbeef0;--panel:#fff7f8;--panel2:#f3dfe4;--line:#e6c9d1;--txt:#2a1d22;--muted:#8a6f78;--accent:#c0436a;--good:#2f9e6b;--chip:#f1d8de;--blur:rgba(251,238,240,.9);--frame:#f0dde1;}
+  :root[data-theme="retro-light"]{   /* Retro Light — warm cream + brick */
+    --bg:#efe7d6;--panel:#fbf5e8;--panel2:#e6dcc6;--line:#d3c5a8;--txt:#241f17;--muted:#7a7058;--accent:#c0392b;--good:#1f8a6d;--chip:#e9dec8;--blur:rgba(239,231,214,.9);--frame:#e6dcc6;}
+  :root[data-theme="hc-light"]{      /* High Contrast Light */
+    --bg:#ffffff;--panel:#ffffff;--panel2:#efefef;--line:#000000;--txt:#000000;--muted:#333333;--accent:#0040d0;--good:#00772f;--chip:#e6e6e6;--blur:rgba(255,255,255,.95);--frame:#e6e6e6;}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
   body{
@@ -130,11 +139,12 @@
   .gcell.tgt{box-shadow:0 0 0 3px var(--good);}
   .gcell.start{border-color:var(--good);}
   .gcell img{width:74%;height:74%;object-fit:contain;border-radius:12%;}
-  /* light mode: the white game icons vanish on cream cells -> darken them (except on dark/selected cells) */
-  :root[data-theme="light"] .gcell img,
-  :root[data-theme="light"] .perkopt img,
-  :root[data-theme="light"] .perkitem img{ filter:invert(1) brightness(.82); }
-  :root[data-theme="light"] .gcell.on img{ filter:none; }   /* selected / in-path cells are dark -> keep white */
+  .gcell img,.perkopt img,.perkitem img{ filter:blur(.4px); }   /* soften upscaled raster icons */
+  /* light themes: white game icons vanish on light cells -> darken them (except on dark/selected cells) */
+  :root[data-mode="light"] .gcell img,
+  :root[data-mode="light"] .perkopt img,
+  :root[data-mode="light"] .perkitem img{ filter:invert(1) brightness(.82) blur(.4px); }
+  :root[data-mode="light"] .gcell.on img{ filter:blur(.4px); }   /* selected / in-path cells are dark -> keep white */
   .gcell .emoji{font-size:min(7vw,30px);}
   .gcell .cost{position:absolute;bottom:1px;right:3px;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;}
   .gcell .val{position:absolute;top:1px;left:0;right:0;text-align:center;font-size:9px;font-weight:800;color:#ffe79a;text-shadow:0 1px 2px #000;padding:0 2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
@@ -193,7 +203,7 @@
     flex:0 0 auto;background:var(--chip);border:1px solid var(--line);color:var(--muted);
     border-radius:99px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;
   }
-  .fchip.active{background:var(--txt);border-color:var(--txt);color:var(--bg);}
+  .fchip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
   .sub{font-size:12.5px;color:var(--muted);margin-top:1px;}
   .row.done .nm{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line);}
   .row.done .box{background:var(--good);border-color:var(--good);}
@@ -211,6 +221,9 @@
   }
   .sheet.open{transform:translateY(0);}
   .grab{width:42px;height:5px;border-radius:99px;background:var(--line);margin:8px auto 14px;}
+  .sheetx{position:absolute;top:8px;right:12px;width:34px;height:34px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);font-size:20px;line-height:1;text-align:center;cursor:pointer;z-index:3;padding:0;}
+  .thgrp{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:12px 2px 5px;}
+  .thsw{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);flex:0 0 auto;}
   .sheet h3{margin:0 0 4px;font-size:16px;}
   .sheet p{margin:0 0 16px;color:var(--muted);font-size:13.5px;}
   .act{
@@ -274,7 +287,7 @@
 
 <div id="viewMastery" hidden>
   <header class="mhead">
-    <div class="title"><h1 id="mTitle">Car Mastery</h1><button class="menu-btn" id="perksBtn">Perks</button></div>
+    <div class="title"><h1 id="mTitle">Car Mastery</h1><div style="display:flex;gap:8px"><button class="menu-btn" id="perksBtn">Perks</button><button class="menu-btn" id="mMenuBtn">Menu</button></div></div>
     <div class="search" id="mSearchWrap"><input id="msearch" type="search" autocomplete="off" placeholder="Find a car…"><button class="clr" id="mclr">✕</button></div>
   </header>
   <main id="mlist"></main>
@@ -283,7 +296,7 @@
 
 <div id="viewGarage" hidden>
   <header class="mhead">
-    <div class="title"><h1>Garage</h1><button class="menu-btn" id="gAdd">Add car</button></div>
+    <div class="title"><h1>Garage</h1><div style="display:flex;gap:8px"><button class="menu-btn" id="gAdd">Add car</button><button class="menu-btn" id="gMenuBtn">Menu</button></div></div>
     <div class="search"><input id="gsearch" type="search" autocomplete="off" placeholder="Find a car…"><button class="clr" id="gclr">✕</button></div>
   </header>
   <main id="glist"></main>
@@ -298,6 +311,7 @@
 <div class="scrim" id="scrim"></div>
 <div class="sheet" id="sheet">
   <div class="grab"></div>
+  <button class="sheetx" data-close="sheet" aria-label="Close">×</button>
   <div id="sheetMain">
     <h3>Menu</h3>
     <p>Your progress is saved automatically in this browser. Use the filter chips up top to show only owned / not-owned / photographed / not-photographed cars.</p>
@@ -354,11 +368,17 @@
     <p style="line-height:1.5">This tool and its creators <b>claim no ownership</b> of any of these assets, are <b>not affiliated with or endorsed by</b> Microsoft, Playground Games, forzagarage, or any manufacturer, and make no commercial use of them. All rights remain with their respective owners.</p>
     <div class="row-btns"><button class="act" id="aboutBack" style="justify-content:center;">Back</button></div>
   </div>
+  <div id="sheetTheme" style="display:none;">
+    <h3>Theme</h3>
+    <div id="thList"></div>
+    <div class="row-btns" style="margin-top:6px"><button class="act" id="themeBack" style="justify-content:center;">Back</button></div>
+  </div>
 </div>
 
 <div class="scrim" id="pkScrim"></div>
 <div class="sheet" id="pkSheet">
   <div class="grab"></div>
+  <button class="sheetx" data-close="pk" aria-label="Close">×</button>
   <div id="pkChoose">
     <h3 id="pkTitle">Choose a perk</h3>
     <div class="perkpick" id="pkGrid"></div>
@@ -378,6 +398,7 @@
 <div class="scrim" id="pcScrim"></div>
 <div class="sheet" id="pcSheet">
   <div class="grab"></div>
+  <button class="sheetx" data-close="pc" aria-label="Close">×</button>
   <div id="pcListView">
     <h3>Perks catalog</h3>
     <p>Define perk types once (icon, name, description) — reused across all cars. Add your own square icons here.</p>
@@ -401,6 +422,7 @@
 <div class="scrim" id="flScrim"></div>
 <div class="sheet" id="flSheet">
   <div class="grab"></div>
+  <button class="sheetx" data-close="fl" aria-label="Close">×</button>
   <div id="flListView">
     <h3>Flags</h3>
     <p>Special categories you can tag cars with. Add your own, rename, or recolour.</p>
@@ -544,7 +566,7 @@ let query = "";
 let hideFEFlag = false;
 let photoFilter = "all";   // all | yes | no
 let ownFilter = "all";     // all | yes | no
-let groupMode = "class";   // class | maker | year | country
+let groupMode = "maker";   // class | maker | year | country  (default: maker, like the game)
 let dir = "asc";           // asc | desc
 
 function loadDone(){
@@ -727,7 +749,7 @@ function groupKeyOf(c){
 function groupTitle(k){ return groupMode==="class" ? `Class ${k}` : k; }
 function sortWithin(arr){
   arr.sort((a,b)=>{
-    if(groupMode==="maker") return a[0]-b[0] || a[2].localeCompare(b[2]);
+    if(groupMode==="maker") return b[0]-a[0] || a[2].localeCompare(b[2]);  // year descending within maker
     if(groupMode==="year")  return a[1].localeCompare(b[1]) || a[2].localeCompare(b[2]);
     // class or country: by maker, then year
     return a[1].localeCompare(b[1]) || a[0]-b[0];
@@ -790,10 +812,12 @@ function openSheet(){ scrim.classList.add("open"); sheet.classList.add("open"); 
 function closeSheet(){ scrim.classList.remove("open"); sheet.classList.remove("open"); showMenu(); }
 $("#menuBtn").onclick=openSheet;
 scrim.onclick=closeSheet;
+$("#gMenuBtn").onclick=openSheet; $("#mMenuBtn").onclick=openSheet;
+document.querySelectorAll(".sheetx").forEach(b=>{ b.onclick=()=>({sheet:closeSheet,pk:closePk,pc:closePC,fl:closeFL}[b.dataset.close]||function(){})(); });
 
-function showMenu(){ $("#sheetMain").style.display="block"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="none"; $("#sheetAbout").style.display="none"; }
-function showIO(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="block"; $("#sheetEdit").style.display="none"; $("#sheetAbout").style.display="none"; }
-function showEdit(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="block"; $("#sheetAbout").style.display="none"; }
+function showMenu(){ $("#sheetMain").style.display="block"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="none"; $("#sheetAbout").style.display="none"; $("#sheetTheme").style.display="none"; }
+function showIO(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="block"; $("#sheetEdit").style.display="none"; $("#sheetAbout").style.display="none"; $("#sheetTheme").style.display="none"; }
+function showEdit(){ $("#sheetMain").style.display="none"; $("#sheetIO").style.display="none"; $("#sheetEdit").style.display="block"; $("#sheetAbout").style.display="none"; $("#sheetTheme").style.display="none"; }
 $("#aboutBtn").onclick=()=>{ $("#sheetMain").style.display="none"; $("#sheetAbout").style.display="block"; };
 $("#aboutBack").onclick=showMenu;
 
@@ -1059,7 +1083,7 @@ function carRowHtml(c){
 }
 function carListMatch(c,q){ return ((carCfg(c.id).name||"")+" "+c[1]+" "+c[2]+" "+c[0]).toLowerCase().includes(q); }
 function renderGarage(){
-  const cars=(gquery?LIST.filter(c=>carListMatch(c,gquery)):LIST.slice()).sort((a,b)=>a[1].localeCompare(b[1])||a[0]-b[0]);
+  const cars=(gquery?LIST.filter(c=>carListMatch(c,gquery)):LIST.slice()).sort((a,b)=>a[1].localeCompare(b[1])||b[0]-a[0]);
   $("#glist").innerHTML = cars.length? cars.map(carRowHtml).join("") : `<div class="empty">No cars match.</div>`;
   $("#glist").querySelectorAll(".grow").forEach(el=>el.onclick=()=>openEdit(el.dataset.id));
 }
@@ -1071,7 +1095,7 @@ mSearch.addEventListener("input",()=>{ mquery=mSearch.value.trim().toLowerCase()
 $("#mclr").onclick=()=>{ mSearch.value=""; mquery=""; $("#mclr").style.display="none"; renderMList(); };
 function renderMList(){
   $("#treewrap").hidden=true; $("#mlist").style.display="block"; $("#mSearchWrap").style.display="block"; $("#mTitle").textContent="Car Mastery";
-  const cars=(mquery?LIST.filter(c=>carListMatch(c,mquery)):LIST.slice()).sort((a,b)=>a[1].localeCompare(b[1])||a[0]-b[0]);
+  const cars=(mquery?LIST.filter(c=>carListMatch(c,mquery)):LIST.slice()).sort((a,b)=>a[1].localeCompare(b[1])||b[0]-a[0]);
   $("#mlist").innerHTML = cars.length? cars.map(carRowHtml).join("") : `<div class="empty">No cars match.</div>`;
   $("#mlist").querySelectorAll(".grow").forEach(el=>el.onclick=()=>openCarTree(el.dataset.id));
 }
@@ -1199,16 +1223,44 @@ $("#pcSave").onclick=()=>{
 $("#pcDel").onclick=()=>{ if(!pcEditKey)return; if(!confirm("Delete this perk type?"))return; savePerks(loadPerks().filter(p=>p.key!==pcEditKey)); pcImgData=null; pcShowList(); };
 /* ========================== /MASTERY ========================== */
 
-// ---- theme (Sumi Night / Washi) ----
+// ---- themes ----
 const THEME_KEY="fh6_theme_v1";
-function applyTheme(t){
-  document.documentElement.setAttribute("data-theme",t);
-  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", t==="light"?"#f4efe4":"#0d1117");
-  const st=$("#themeState"); if(st) st.textContent = t==="light"?"Washi (light)":"Sumi Night (dark)";
+const THEMES=[
+  {k:"sumi",name:"Sumi Night",mode:"dark",bg:"#0d1117",grp:"Dark"},
+  {k:"sakura-dark",name:"Sakura Night",mode:"dark",bg:"#14121c",grp:"Dark"},
+  {k:"racing-dark",name:"Racing",mode:"dark",bg:"#101114",grp:"Dark"},
+  {k:"retro-dark",name:"Retro Arcade",mode:"dark",bg:"#160f24",grp:"Dark"},
+  {k:"washi",name:"Washi",mode:"light",bg:"#f4efe4",grp:"Light"},
+  {k:"sakura-light",name:"Sakura",mode:"light",bg:"#fbeef0",grp:"Light"},
+  {k:"racing-light",name:"Racing Light",mode:"light",bg:"#eef0f3",grp:"Light"},
+  {k:"retro-light",name:"Retro Light",mode:"light",bg:"#efe7d6",grp:"Light"},
+  {k:"hc-dark",name:"High Contrast Dark",mode:"dark",bg:"#000000",grp:"Accessibility"},
+  {k:"hc-light",name:"High Contrast Light",mode:"light",bg:"#ffffff",grp:"Accessibility"},
+];
+let theme; try{ theme=localStorage.getItem(THEME_KEY)||"sumi"; }catch(e){ theme="sumi"; }
+if(theme==="dark")theme="sumi"; if(theme==="light")theme="washi";
+if(!THEMES.find(t=>t.k===theme)) theme="sumi";
+function applyTheme(k){
+  const t=THEMES.find(x=>x.k===k)||THEMES[0]; theme=t.k;
+  document.documentElement.setAttribute("data-theme",t.k);
+  document.documentElement.setAttribute("data-mode",t.mode);
+  const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content",t.bg);
+  const st=$("#themeState"); if(st) st.textContent=t.name;
+  try{ localStorage.setItem(THEME_KEY,t.k); }catch(e){}
 }
-let theme; try{ theme=localStorage.getItem(THEME_KEY)||"dark"; }catch(e){ theme="dark"; }
 applyTheme(theme);
-$("#themeBtn").onclick=()=>{ theme = theme==="light"?"dark":"light"; try{ localStorage.setItem(THEME_KEY,theme); }catch(e){} applyTheme(theme); };
+const THEME_AC={sumi:"#5b7cfa","sakura-dark":"#ec6d8a","racing-dark":"#e2342b","retro-dark":"#ff4fa6",washi:"#324db3","sakura-light":"#c0436a","racing-light":"#d62f27","retro-light":"#c0392b","hc-dark":"#2f9bff","hc-light":"#0040d0"};
+function renderThemeList(){
+  let h="", grp="";
+  THEMES.forEach(t=>{
+    if(t.grp!==grp){ grp=t.grp; h+=`<div class="thgrp">${grp}</div>`; }
+    h+=`<button class="act thopt" data-k="${t.k}"><span class="thsw" style="background:linear-gradient(135deg,${t.bg} 0 50%,${THEME_AC[t.k]||'#888'} 50% 100%)"></span><span>${t.name}</span>${t.k===theme?'<span style="margin-left:auto;color:var(--good);font-size:18px">●</span>':''}</button>`;
+  });
+  $("#thList").innerHTML=h;
+  $("#thList").querySelectorAll(".thopt").forEach(b=>b.onclick=()=>{ applyTheme(b.dataset.k); renderThemeList(); });
+}
+$("#themeBtn").onclick=()=>{ renderThemeList(); $("#sheetMain").style.display="none"; $("#sheetTheme").style.display="block"; };
+$("#themeBack").onclick=showMenu;
 
 buildList();
 renderAll();
