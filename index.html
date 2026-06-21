@@ -130,6 +130,11 @@
   .gcell.tgt{box-shadow:0 0 0 3px var(--good);}
   .gcell.start{border-color:var(--good);}
   .gcell img{width:74%;height:74%;object-fit:contain;border-radius:12%;}
+  /* light mode: the white game icons vanish on cream cells -> darken them (except on dark/selected cells) */
+  :root[data-theme="light"] .gcell img,
+  :root[data-theme="light"] .perkopt img,
+  :root[data-theme="light"] .perkitem img{ filter:invert(1) brightness(.82); }
+  :root[data-theme="light"] .gcell.on img{ filter:none; }   /* selected / in-path cells are dark -> keep white */
   .gcell .emoji{font-size:min(7vw,30px);}
   .gcell .cost{position:absolute;bottom:1px;right:3px;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;}
   .gcell .val{position:absolute;top:1px;left:0;right:0;text-align:center;font-size:9px;font-weight:800;color:#ffe79a;text-shadow:0 1px 2px #000;padding:0 2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
