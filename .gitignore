@@ -12,3 +12,5 @@ Thumbs.db
 /package-lock.json
 /package.json
 /_test.js
+/image-gen/
+/*.png
