@@ -4,3 +4,9 @@
 /fh6-promo-tracker.html
 .DS_Store
 Thumbs.db
+
+# local tooling / verification artifacts (not part of the app)
+/node_modules/
+/package-lock.json
+/package.json
+/_test.js
